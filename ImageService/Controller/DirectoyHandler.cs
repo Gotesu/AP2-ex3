@@ -1,12 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ImageService.Logging;
-using System.Text.RegularExpressions;
 using ImageService.Infrastructure.Enums;
 using ImageService.Model;
 using ImageService.Server;
@@ -19,8 +14,8 @@ namespace ImageService.Controller.Handlers
 		private IImageController m_controller;              // The Image Processing Controller
 		private ILoggingService m_logging;
 		private FileSystemWatcher m_dirWatcher;             // The Watcher of the Dir
-		private string m_path { get; set; }                 // The Path of directory
-		private int m_tasks;								// the number of running tasks
+		public string m_path { get; private set; }                 // The Path of directory
+		private int m_tasks;                                // the number of running tasks
 		private Object tLock = new Object();
 		#endregion
 
@@ -45,21 +40,21 @@ namespace ImageService.Controller.Handlers
 		/// <param name="dirPath">A path string for the directory</param>
 		public void StartHandleDirectory(string dirPath)
 		{
-            try
-            {
-                m_path = dirPath;
-                m_dirWatcher.Path = m_path;
-                m_dirWatcher.Created += new FileSystemEventHandler(OnCreated);
-                //we will be filtering nothing because we need to watch multiple types, filtering will be done on event.
-                //this is supposed to be more efficient than having 4 watchers to each folder.
-                m_dirWatcher.Filter = "*.*";
-                // Start monitoring
-                m_dirWatcher.EnableRaisingEvents = true;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+			try
+			{
+				m_path = dirPath;
+				m_dirWatcher.Path = m_path;
+				m_dirWatcher.Created += new FileSystemEventHandler(OnCreated);
+				//we will be filtering nothing because we need to watch multiple types, filtering will be done on event.
+				//this is supposed to be more efficient than having 4 watchers to each folder.
+				m_dirWatcher.Filter = "*.*";
+				// Start monitoring
+				m_dirWatcher.EnableRaisingEvents = true;
+			}
+			catch (Exception e)
+			{
+				throw e;
+			}
 		}
 
 		/// <summary>
@@ -72,7 +67,7 @@ namespace ImageService.Controller.Handlers
 			// check if command is meant for its directory
 			if (!e.RequestDirPath.Equals(m_path) && !e.RequestDirPath.Equals("*"))
 				return;
-			if (e.CommandID.Equals((int) CommandEnum.CloseCommand))
+			if (e.CommandID.Equals((int)CommandEnum.CloseCommand))
 			{
 				CloseHandler(sender);
 				return;
@@ -91,7 +86,7 @@ namespace ImageService.Controller.Handlers
 				// Stop monitoring
 				m_dirWatcher.EnableRaisingEvents = false;
 				// Stop getting commands
-				((ImageServer)sender).CommandRecieved -= OnCommandRecieved;
+				((DirectoryManager)sender).CommandRecieved -= OnCommandRecieved;
 				// wait for all task to end
 				while (m_tasks > 0)
 					System.Threading.Thread.Sleep(1000);
@@ -110,12 +105,12 @@ namespace ImageService.Controller.Handlers
 		public void OnCreated(object source, FileSystemEventArgs e)
 		{
 			//check file type
-			if (!( e.FullPath.EndsWith(".jpg") || e.FullPath.EndsWith(".png") ||
+			if (!(e.FullPath.EndsWith(".jpg") || e.FullPath.EndsWith(".png") ||
 			e.FullPath.EndsWith(".gif") || e.FullPath.EndsWith(".bmp") ||
-            e.FullPath.EndsWith(".JPG") || e.FullPath.EndsWith(".PNG") ||
-            e.FullPath.EndsWith(".GIF") || e.FullPath.EndsWith(".BMP") ))
+			e.FullPath.EndsWith(".JPG") || e.FullPath.EndsWith(".PNG") ||
+			e.FullPath.EndsWith(".GIF") || e.FullPath.EndsWith(".BMP")))
 				return;
-            //set commandID
+			//set commandID
 			int CommandID = (int)CommandEnum.NewFileCommand;
 			// get path to arg[]
 			string[] args = { e.FullPath };
