@@ -77,7 +77,6 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server\DirectoryManager.cs" />
     <Compile Include="Server\ImageServer.cs" />
   </ItemGroup>
   <ItemGroup>
