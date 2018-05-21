@@ -23,12 +23,7 @@ namespace ImageServiceGUI.SettingsTab
         public SettingsView()
         {
             InitializeComponent();
-            //this.DataContext = SettingsViewModel();
-        }
-
-        private void btnRemove_Click(object sender, RoutedEventArgs e)
-        {
-            return;
+            this.DataContext = new SettingsViewModel();
         }
     }
 }
