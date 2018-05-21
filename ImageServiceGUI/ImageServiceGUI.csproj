@@ -59,10 +59,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="SettingsTab\SettingsTab.xaml.cs">
-      <DependentUpon>SettingsTab.xaml</DependentUpon>
+    <Compile Include="LogTab\LogView.xaml.cs">
+      <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>
-    <Page Include="LogTab\LogTab.xaml">
+    <Compile Include="LogTab\LogViewModel.cs" />
+    <Compile Include="LogTab\LogModel.cs" />
+    <Compile Include="SettingsTab\SettingsModel.cs" />
+    <Compile Include="SettingsTab\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsTab\SettingsViewModel.cs" />
+    <Page Include="LogTab\LogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -74,14 +81,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LogTab\LogTab.xaml.cs">
-      <DependentUpon>LogTab.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SettingsTab\SettingsTab.xaml">
+    <Page Include="SettingsTab\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,7 +118,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="LogTab\LogStyle.css" />
+    <Content Include="SettingsTab\SettingsStyle.css" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

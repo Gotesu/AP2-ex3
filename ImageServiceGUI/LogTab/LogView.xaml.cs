@@ -10,18 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ImageServiceGUI.LogTab
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for LogView.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class LogView : UserControl
     {
-        public Window1()
+        public LogView()
         {
             InitializeComponent();
+            //this.DataContext = LogViewModel();
         }
     }
 }

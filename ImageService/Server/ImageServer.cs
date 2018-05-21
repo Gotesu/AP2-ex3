@@ -54,7 +54,7 @@ namespace ImageService.Server
                 }
                 catch (Exception e)
                 {
-                    m_logging.Log("directory" + dest[i] + "couldn't be handeled", MessageTypeEnum.FAIL);
+                    m_logging.Log("directory" + dest[i] + "couldn't be handeled" + "because" + e.Message , MessageTypeEnum.FAIL);
                 }
 			}
         }
