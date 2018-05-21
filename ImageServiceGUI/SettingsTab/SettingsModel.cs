@@ -92,6 +92,9 @@ namespace ImageServiceGUI.SettingsTab
             model_OPD = "ldfjglsdkjglksljd";
             handlers = new ObservableCollection<string>();
             handlers.Add("wow");
+            handlers.Add("wow1");
+            handlers.Add("wow2");
+            handlers.Add("wow3");
         }
     }
 }

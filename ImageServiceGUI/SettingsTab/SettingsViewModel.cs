@@ -85,10 +85,11 @@ namespace ImageServiceGUI.SettingsTab
                 OnPropertyChanged("handlers");
             }
         }
+        public string SelectedModel { get; set; }
         public ICommand removeCommand { get; private set; }
         private void remove_click(object sender)
         {
-            handlers.Add("wow2");
+            handlers.Remove(SelectedModel);
         }
         private bool canRemove(object o)
         {
