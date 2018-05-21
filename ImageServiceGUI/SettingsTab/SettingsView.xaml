@@ -46,7 +46,7 @@
                 <TextBlock Grid.Row="3" FontWeight="Bold">Thumbnail Size:</TextBlock>
                 <TextBlock x:Name="txtThumbSize" Grid.Row="3" Grid.Column="2" Text="{Binding thumbSize}"></TextBlock>
                 <Button x:Name="btnRmv" Grid.Row="4" HorizontalAlignment="Center" FontSize="10" Grid.ColumnSpan="2" Width="500" Margin="5" Padding="5" Command ="{ Binding removeCommand}">remove</Button>
-                    <ListBox ItemsSource="{Binding handlers}" SelectedItem="{Binding SelectedModel}" Grid.Row="5" HorizontalAlignment="Center" Grid.ColumnSpan="2"></ListBox>
+                    <ListBox x:Name="Lb" ItemsSource="{Binding handlers}" SelectedItem="{Binding SelectedModel}" Grid.Row="5" HorizontalAlignment="Center" Grid.ColumnSpan="2"></ListBox>
             </Grid>
         </ScrollViewer>
     </Grid>

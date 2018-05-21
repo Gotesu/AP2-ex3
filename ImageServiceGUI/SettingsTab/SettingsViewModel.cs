@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ImageServiceGUI.SettingsTab
@@ -85,15 +86,31 @@ namespace ImageServiceGUI.SettingsTab
                 OnPropertyChanged("handlers");
             }
         }
-        public string SelectedModel { get; set; }
+        private string _selectedModel;
+        public string SelectedModel
+        {
+            get { return _selectedModel; }
+            set
+            {
+                _selectedModel = value;
+                OnPropertyChanged("SelectedModel");
+                //taken from the simple MVVM microsoft example
+                var command = this.removeCommand as DelegateCommand<object>;
+                command.RaiseCanExecuteChanged();
+            }
+        }
+
         public ICommand removeCommand { get; private set; }
+       
         private void remove_click(object sender)
         {
             handlers.Remove(SelectedModel);
         }
         private bool canRemove(object o)
         {
-            return true;
+            if (SelectedModel != null)
+                return true;
+            return false;
         }
         public SettingsViewModel()
         {
