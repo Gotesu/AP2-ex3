@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageServiceGUI.SettingsTab
+namespace ImageServiceGUI.LogTab
 {
-    class SettingsModel:ISettingsModel
+    class ILogModel
     {
     }
 }
