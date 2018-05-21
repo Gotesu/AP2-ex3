@@ -76,11 +76,6 @@ namespace ImageServiceGUI.SettingsTab
             logName = "log";
             source = "source";
         }
-        
-        public void btnRemove_Click(object sender, EventArgs e)
-        {
-            return;
-        }
 
     }
 }

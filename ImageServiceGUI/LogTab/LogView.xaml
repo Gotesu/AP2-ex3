@@ -6,8 +6,20 @@
       xmlns:local="clr-namespace:ImageServiceGUI.LogTab"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300">
-
+    <UserControl.Resources>
+        <Style x:Key="logTitle">
+            <Setter Property="TextElement.FontSize"  Value="20" />
+            <Setter Property="TextElement.FontStyle" Value="Italic" />
+            <Setter Property="TextElement.FontWeight" Value="UltraBold" />
+            <Setter Property="TextElement.FontStretch" Value="Expanded" />
+            <Setter Property="TextBlock.HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextBlock.Foreground" Value="Chocolate"/>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <TextBlock Style="{StaticResource logTitle}">Log</TextBlock>
     <Grid>
         <TextBlock>blablabla</TextBlock>
     </Grid>
+    </StackPanel>
 </UserControl>
