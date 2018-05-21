@@ -19,7 +19,12 @@
     <StackPanel>
         <TextBlock Style="{StaticResource logTitle}">Log</TextBlock>
     <Grid>
-        <TextBlock>blablabla</TextBlock>
+            <DataGrid ItemsSource="{Binding entries}" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                <DataGridTextColumn Width ="100" Header="Type" Binding="{Binding Path=EntryType}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Message" Binding="{Binding Path=Message}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
     </Grid>
     </StackPanel>
 </UserControl>

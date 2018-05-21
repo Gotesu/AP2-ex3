@@ -23,7 +23,7 @@ namespace ImageServiceGUI.LogTab
         public LogView()
         {
             InitializeComponent();
-            //this.DataContext = LogViewModel();
+            this.DataContext = new LogViewModel();
         }
     }
 }
