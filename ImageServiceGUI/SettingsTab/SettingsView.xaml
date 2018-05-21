@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ImageServiceGUI.SettingsTab"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300">
+      d:DesignHeight="500" d:DesignWidth="500">
     <UserControl.Resources>
         <Style x:Key="settingsTitle">
             <Setter Property="TextElement.FontSize"  Value="20" />
@@ -17,32 +17,38 @@
         </Style>
     </UserControl.Resources>
     <Viewbox>
-        <StackPanel>
-            <TextBlock Style="{StaticResource settingsTitle}">Settings</TextBlock>
-            <Grid HorizontalAlignment="Stretch" TextBlock.FontSize="12">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock FontWeight="Bold" Text = "Output Directory:    "></TextBlock>
-            <TextBlock x:Name="txtOPD" Grid.Column="2" Text="{Binding OPD}"></TextBlock>
-            <TextBlock Grid.Row="1" FontWeight="Bold">Source Name:  </TextBlock>
-            <TextBlock x:Name="txtSource" Grid.Row="1" Grid.Column="2" Text="{Binding source}"></TextBlock>
-            <TextBlock Grid.Row="2" FontWeight="Bold">Log Name: </TextBlock>
-            <TextBlock x:Name="txtLog" Grid.Row="2" Grid.Column="2" Text="{Binding logName}"></TextBlock>
-            <TextBlock Grid.Row="3" FontWeight="Bold">Thumbnail Size:   </TextBlock>
-            <TextBlock x:Name="txtThumbSize" Grid.Row="3" Grid.Column="2" Text="{Binding thumbSize}"></TextBlock>
-            <Button x:Name="btnStart" Grid.Row="4" HorizontalAlignment="Center" FontSize="10" Grid.ColumnSpan="2"  Margin="5" Padding="5">remove</Button>
-                    <ListBox Grid.Row="5" HorizontalAlignment="Center" Grid.ColumnSpan="2"></ListBox>
-                </Grid>
-        </StackPanel>
+    <Grid Width="500">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource settingsTitle}">Settings</TextBlock>
+        <ScrollViewer Height="250" Width="500" Grid.Row="2" VerticalScrollBarVisibility="Visible" CanContentScroll="True" >
+            <Grid HorizontalAlignment="Stretch" TextBlock.FontSize="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock FontWeight="Bold" Text = "Output Directory:    "></TextBlock>
+                <TextBlock x:Name="txtOPD" Grid.Column="2" Text="{Binding OPD}"></TextBlock>
+                <TextBlock Grid.Row="1" FontWeight="Bold">Source Name:</TextBlock>
+                <TextBlock x:Name="txtSource" Grid.Row="1" Grid.Column="2" Text="{Binding source}"></TextBlock>
+                <TextBlock Grid.Row="2" FontWeight="Bold">Log Name:</TextBlock>
+                <TextBlock x:Name="txtLog" Grid.Row="2" Grid.Column="2" Text="{Binding logName}"></TextBlock>
+                <TextBlock Grid.Row="3" FontWeight="Bold">Thumbnail Size:</TextBlock>
+                <TextBlock x:Name="txtThumbSize" Grid.Row="3" Grid.Column="2" Text="{Binding thumbSize}"></TextBlock>
+                <Button x:Name="btnRmv" Grid.Row="4" HorizontalAlignment="Center" FontSize="10" Grid.ColumnSpan="2" Width="500" Margin="5" Padding="5" Command ="{ Binding removeCommand}">remove</Button>
+                <ListBox ItemsSource="{Binding handlers}" Grid.Row="5" HorizontalAlignment="Center" Grid.ColumnSpan="2"></ListBox>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
     </Viewbox>
 </UserControl>

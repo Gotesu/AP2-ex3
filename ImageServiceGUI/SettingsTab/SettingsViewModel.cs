@@ -1,14 +1,19 @@
-﻿using System;
+﻿using Microsoft.Practices.Prism.Commands;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace ImageServiceGUI.SettingsTab
 {
     class SettingsViewModel : INotifyPropertyChanged
     {
+        private ISettingsModel model;
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
@@ -16,15 +21,14 @@ namespace ImageServiceGUI.SettingsTab
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
-        private string _OPD;
         public string OPD
         {
-            get { return _OPD; }
+            get { return model.OPD; }
             set
             {
-                if (_OPD != value)
+                if (model.OPD != value)
                 {
-                    _OPD = value;
+                    model.OPD = value;
                     OnPropertyChanged("OPD");
                 }
             }
@@ -68,10 +72,32 @@ namespace ImageServiceGUI.SettingsTab
                 }
             }
         }
+        public ObservableCollection<string> handlers
+        {
+            get
+            {
+                return model.handlers;
+            }
 
+            set
+            {
+                model.handlers = value;
+                OnPropertyChanged("handlers");
+            }
+        }
+        public ICommand removeCommand { get; private set; }
+        private void remove_click(object sender)
+        {
+            handlers.Add("wow2");
+        }
+        private bool canRemove(object o)
+        {
+            return true;
+        }
         public SettingsViewModel()
         {
-            _OPD = "blablab/kljlsfjdf";
+            model = new SettingsModel();
+            this.removeCommand = new DelegateCommand<object>(this.remove_click, canRemove);
             thumbSize = "120";
             logName = "log";
             source = "source";

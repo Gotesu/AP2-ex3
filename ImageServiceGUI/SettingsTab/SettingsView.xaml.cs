@@ -25,5 +25,6 @@ namespace ImageServiceGUI.SettingsTab
             InitializeComponent();
             this.DataContext = new SettingsViewModel();
         }
+
     }
 }
