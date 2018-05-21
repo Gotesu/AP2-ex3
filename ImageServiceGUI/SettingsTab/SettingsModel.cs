@@ -8,5 +8,6 @@ namespace ImageServiceGUI.SettingsTab
 {
     class SettingsModel:ISettingsModel
     {
+
     }
 }

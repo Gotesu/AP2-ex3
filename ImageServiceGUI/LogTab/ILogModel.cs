@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGUI.LogTab
 {
-    class ILogModel
+    interface ILogModel
     {
     }
 }

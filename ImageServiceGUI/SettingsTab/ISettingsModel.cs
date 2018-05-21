@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGUI.SettingsTab
 {
-    class ISettingsModel
+    interface ISettingsModel
     {
-        public string model_OPD {get; set;}
-        public string model_logName { get; set; }
-        public string model_source { get; set; }
-        public string model_thumbSize { get; set; }
-        public ObservableCollection<string> model_handlers { get; set; }
+        string model_OPD {get; set;}
+        string model_logName { get; set; }
+        string model_source { get; set; }
+        string model_thumbSize { get; set; }
+        ObservableCollection<string> model_handlers { get; set; }
     }
 }
