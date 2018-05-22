@@ -15,13 +15,21 @@
             <Setter Property="TextBlock.HorizontalAlignment" Value="Center"/>
             <Setter Property="TextBlock.Foreground" Value="Chocolate"/>
         </Style>
+        <local:TypeToColor x:Key="converter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource logTitle}">Log</TextBlock>
     <Grid>
             <DataGrid ItemsSource="{Binding entries}" IsReadOnly="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                <DataGridTextColumn Width ="100" Header="Type" Binding="{Binding Path=EntryType}"></DataGridTextColumn>
+                <DataGridTextColumn Width ="100" Header="Type" >
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Background" Value="{Binding EntryType, Converter={StaticResource converter}}" />
+                                <Setter Property="Text" Value="{Binding EntryType}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Width="*" Header="Message" Binding="{Binding Path=Message}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
