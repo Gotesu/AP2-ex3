@@ -127,6 +127,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageService.Infrastructure\ImageService.Infrastructure.csproj">
+      <Project>{06396ABB-2928-4A0A-B8D8-CCC3B62F560D}</Project>
+      <Name>ImageService.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageService.Logging\ImageService.Logging.csproj">
       <Project>{65aafd71-d983-4a8d-b2f1-1ff7d17e44d5}</Project>
       <Name>ImageService.Logging</Name>

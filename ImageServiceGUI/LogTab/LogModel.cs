@@ -13,6 +13,7 @@ namespace ImageServiceGUI.LogTab
 {
     class LogModel:ILogModel
     {
+        private IGuiSide_client client;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged(string propName)
@@ -43,7 +44,7 @@ namespace ImageServiceGUI.LogTab
         }
         public LogModel()
         {
-            IGuiSide_client client = GuiSide_client.get_instance();
+            client = GuiSide_client.get_instance();
             entries = new ObservableCollection<EventLogEntry>();
             buildLog(entries, client.getEntries());
             EventLog log = new EventLog();

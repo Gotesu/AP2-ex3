@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ImageService.Infrastructure;
+using ServiceGuiCommunication.GUI_side;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,6 +12,7 @@ namespace ImageServiceGUI.SettingsTab
 {
     class SettingsModel : ISettingsModel
     {
+        private IGuiSide_client client;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged(string propName) {
@@ -89,12 +92,17 @@ namespace ImageServiceGUI.SettingsTab
         }
         public SettingsModel()
         {
-            model_OPD = "ldfjglsdkjglksljd";
+            client = GuiSide_client.get_instance();
+            ImageServiceConfig config = client.getConfig();
+            model_OPD = config.OPD;
             handlers = new ObservableCollection<string>();
-            handlers.Add("wow");
-            handlers.Add("wow1");
-            handlers.Add("wow2");
-            handlers.Add("wow3");
+            foreach (string handler in config.handlers)
+            {
+                handlers.Add(handler);
+            }
+            model_logName = config.logName;
+            model_source = config.source;
+            model_thumbSize = config.thumbSize.ToString();
         }
     }
 }
