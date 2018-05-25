@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ServiceGuiCommunication.Gui;
+using ServiceGuiCommunication.GUI_side;
 
 namespace ImageServiceGUI.LogTab
 {
@@ -18,6 +20,13 @@ namespace ImageServiceGUI.LogTab
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
+
+        public void OnLogRecieved(object sender, EventLogEntry entry)
+        {
+            model_entries.Add(entry);
+            NotifyPropertyChanged("entries");
+        }
+
         private ObservableCollection<EventLogEntry> model_entries;
         public ObservableCollection<EventLogEntry> entries
         {
@@ -34,15 +43,18 @@ namespace ImageServiceGUI.LogTab
         }
         public LogModel()
         {
+            IGuiSide_client client = GuiSide_client.get_instance();
             entries = new ObservableCollection<EventLogEntry>();
+            buildLog(entries, client.getEntries());
             EventLog log = new EventLog();
-            log.Source = "source";
-            log.WriteEntry("wowow");
-            log.WriteEntry("wowow1");
-            log.WriteEntry("wowow2");
-            entries.Add(log.Entries[0]);
-            entries.Add(log.Entries[1]);
-            entries.Add(log.Entries[2]);
+        }
+
+        public void buildLog(ObservableCollection<EventLogEntry> modelList,EventLogEntryCollection fromService)
+        {
+            foreach (EventLogEntry entry in fromService)
+            {
+                modelList.Add(entry);
+            }
         }
     }
 }

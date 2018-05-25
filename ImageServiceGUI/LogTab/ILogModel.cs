@@ -11,5 +11,6 @@ namespace ImageServiceGUI.LogTab
     interface ILogModel
     {
         ObservableCollection<EventLogEntry> entries { get; set; }
+        void OnLogRecieved(object sender, EventLogEntry entry);
     }
 }

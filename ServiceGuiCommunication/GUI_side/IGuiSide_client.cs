@@ -9,12 +9,12 @@ using ImageService.Infrastructure;
 
 namespace ServiceGuiCommunication.GUI_side
 {
-    interface IGuiSide_client
+    public interface IGuiSide_client
     {
         ImageServiceConfig getConfig();
-        EventLog getLog();
         EventLogEntryCollection getEntries();
-        EventLogEntry getEntry();
         void closeClient();
+        event EventHandler<EventLogEntry> newLog;
+
     }
 }
