@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ServiceGuiCommunication.Gui;
 using ServiceGuiCommunication.GUI_side;
 
 namespace ImageServiceGUI.LogTab
@@ -44,10 +43,12 @@ namespace ImageServiceGUI.LogTab
         }
         public LogModel()
         {
+            
             client = GuiSide_client.get_instance();
             entries = new ObservableCollection<EventLogEntry>();
             buildLog(entries, client.getEntries());
             EventLog log = new EventLog();
+            
         }
 
         public void buildLog(ObservableCollection<EventLogEntry> modelList,EventLogEntryCollection fromService)

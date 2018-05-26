@@ -102,7 +102,7 @@ namespace ImageServiceGUI.SettingsTab
             }
             model_logName = config.logName;
             model_source = config.source;
-            model_thumbSize = config.thumbSize.ToString();
+            model_thumbSize = config.thumbSize.ToString();          
         }
     }
 }

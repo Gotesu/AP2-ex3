@@ -34,41 +34,38 @@ namespace ImageServiceGUI.SettingsTab
                 }
             }
         }
-        private string _thumbSize;
         public string thumbSize
         {
-            get { return _thumbSize; }
+            get { return model.thumbSize; }
             set
             {
-                if (_thumbSize != value)
+                if (model.thumbSize != value)
                 {
-                    _thumbSize = value;
+                    model.thumbSize = value;
                     OnPropertyChanged("thumbSize");
                 }
             }
         }
-        private string _source { get; set; }
         public string source
         {
-            get { return _source; }
+            get { return model.source; }
             set
             {
-                if (_source != value)
+                if (model.source != value)
                 {
-                    _source = value;
+                    model.source = value;
                     OnPropertyChanged("source");
                 }
             }
         }
-        private string _logName { get; set; }
         public string logName
         {
-            get { return _logName; }
+            get { return model.logName; }
             set
             {
-                if (_logName != value)
+                if (model.logName != value)
                 {
-                    _logName = value;
+                    model.logName = value;
                     OnPropertyChanged("logName");
                 }
             }
@@ -116,9 +113,6 @@ namespace ImageServiceGUI.SettingsTab
         {
             model = new SettingsModel();
             this.removeCommand = new DelegateCommand<object>(this.remove_click, canRemove);
-            thumbSize = "120";
-            logName = "log";
-            source = "source";
         }
 
     }
