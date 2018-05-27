@@ -24,7 +24,7 @@ namespace ImageServiceGUI
         public MainWindow()
         {
             InitializeComponent();
-            //this.DataContext = GUIClient.Instance();
+            this.DataContext = GUIClient.Instance();
         }
     }
 }
