@@ -46,6 +46,7 @@ namespace ImageService.Server
 			dm = new DirectoryManager(log, m_config, this.OnDirClosed);
 			guis = new GUIServer(9999, log, this.OnNewMessage);
 			eventLogger.EntryWritten += WhenEntryWritten;
+			eventLogger.EnableRaisingEvents = true;
 			guis.Start();
 		}
 
@@ -56,6 +57,7 @@ namespace ImageService.Server
 		{
 			dm.CloseServer();
 			guis.Close();
+			m_eventLogger.EntryWritten -= WhenEntryWritten;
 		}
 
 		/// <summary>
