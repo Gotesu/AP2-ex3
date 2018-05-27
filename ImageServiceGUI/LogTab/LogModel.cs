@@ -57,6 +57,7 @@ namespace ImageServiceGUI.LogTab
             entries = new ObservableCollection<EventLogEntry>();
             buildLog(entries, client.getEntries());
             EventLog log = new EventLog();
+            client.newLog += OnLogRecieved;
             
         }
         /// <summary>

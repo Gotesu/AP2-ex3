@@ -11,6 +11,6 @@ namespace ServiceGuiCommunication.Service_side
     {
         IServiceSide_server getServer();
         int Port { get; set; }
-        IClientHandler ClHandler { get; set; }
+        //IClientHandler ClHandler { get; set; }
     }
 }
