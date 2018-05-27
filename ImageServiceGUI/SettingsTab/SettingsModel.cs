@@ -1,19 +1,18 @@
 ﻿using ImageService.Infrastructure;
-using ServiceGuiCommunication.GUI_side;
-using System;
-using System.Collections.Generic;
+using GUICommunication.Client;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using System.Diagnostics;
+using Newtonsoft.Json;
+using ImageService.Infrastructure.Enums;
 
 namespace ImageServiceGUI.SettingsTab
 {
     class SettingsModel : ISettingsModel
     {
-        private IGuiSide_client client;
-        public event PropertyChangedEventHandler PropertyChanged;
+		private IGUIClient client;
+		public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged(string propName) {
             if (this.PropertyChanged != null)
@@ -92,17 +91,42 @@ namespace ImageServiceGUI.SettingsTab
         }
         public SettingsModel()
         {
-            client = GuiSide_client.get_instance();
-            ImageServiceConfig config = client.getConfig();
-            model_OPD = config.OPD;
-            handlers = new ObservableCollection<string>();
-            foreach (string handler in config.handlers)
-            {
-                handlers.Add(handler);
-            }
-            model_logName = config.logName;
-            model_source = config.source;
-            model_thumbSize = config.thumbSize.ToString();          
+            client = GUIClient.Instance();
+			client.NewMessage += UpdateSettings;
+			model_OPD = "";
+			handlers = null;
+            model_logName = "";
+            model_source = "";
+            model_thumbSize = "";          
         }
-    }
+
+		public void UpdateSettings(object sender, string message)
+		{
+			JObject command = JObject.Parse(message);
+			int commandID = (int)command["commandID"];
+			// check the commandID for a matching response
+			if (commandID == (int)CommandEnum.GetConfigCommand)
+			{
+				// in case of GetConfigCommand
+				ImageServiceConfig fromService =
+					ImageServiceConfig.FromJSON((string)command["config"]);
+				handlers = new ObservableCollection<string>();
+				foreach (string handler in fromService.handlers)
+				{
+					handlers.Add(handler);
+				}
+				model_thumbSize = fromService.thumbSize.ToString();
+				model_logName = fromService.logName;
+				model_OPD = fromService.OPD;
+				model_source = fromService.source;
+			}
+			else if (commandID == (int)CommandEnum.CloseCommand)
+			{
+				// in case of CloseCommand update
+				string dir = (string)command["path"];
+				if (model_handlers != null)
+					model_handlers.Remove(dir);
+			}
+		}
+	}
 }

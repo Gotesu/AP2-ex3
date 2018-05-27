@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ImageService.Logging;
-using ImageService.Controller;
-using ImageService.Controller.Handlers;
 using ImageService.Model;
 using System.Configuration;
 using ImageService.Infrastructure.Enums;
+using ImageService.Infrastructure;
+using GUICommunication.Server;
+using Newtonsoft.Json.Linq;
+using System.Diagnostics;
+using Newtonsoft.Json;
+using ImageService.Controller.Handlers;
+using ImageService.Logging.Modal;
 
 namespace ImageService.Server
 {
@@ -17,71 +20,117 @@ namespace ImageService.Server
     /// the server communicates with the handlers via eventHandlers
     /// </summary>
     public class ImageServer
-    {
-        #region Members
-        private IImageController m_controller;
-        private ILoggingService m_logging;
-        #endregion
-
-        #region Properties
-        public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
-        #endregion
+	{
+		#region Members
+		private ILoggingService m_logging;
+		private EventLog m_eventLogger;
+		private ImageServiceConfig m_config;
+		private DirectoryManager dm;
+		private IGUIServer guis;
+		#endregion
         
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="log"></param>
-        public ImageServer(ILoggingService log)
+        public ImageServer(ILoggingService log, EventLog eventLogger)
         {
-            //taking paths given in the config
-            string[] dest = ConfigurationManager.AppSettings["Handler"].Split(';');
-            //taking thumbsize from config
-            int thumbSize = Int32.Parse(ConfigurationManager.AppSettings["ThumbnailSize"]);
-            m_logging = log;
-            //one controller to rule them all
-            m_controller = new ImageController(new ImageModel(
-                ConfigurationManager.AppSettings["OutputDir"],thumbSize));
-            //enlisting our newly created handlers to command recieved and our OnDirClosed(server method) to closing
-            //event of handlers
-            for (int i = 0; i < dest.Count(); i++)
-            {
-                IDirectoryHandler dH = new DirectoryHandler(m_controller, m_logging);
-                CommandRecieved += dH.OnCommandRecieved;
-                dH.DirectoryClose += OnDirClosed;
-                try
-                {
-                    dH.StartHandleDirectory(dest[i]);
-                }
-                catch (Exception e)
-                {
-                    m_logging.Log("directory" + dest[i] + "couldn't be handeled" + "because" + e.Message , MessageTypeEnum.FAIL);
-                }
-			}
-        }
+			m_logging = log;
+			m_eventLogger = eventLogger;
+			//taking info given in the config
+			List<string> dest = ConfigurationManager.AppSettings["Handler"].Split(';').ToList();
+			int thumbSize = Int32.Parse(ConfigurationManager.AppSettings["ThumbnailSize"]);
+			string sourceName = ConfigurationManager.AppSettings["SourceName"];
+			string logName = ConfigurationManager.AppSettings["LogName"];
+			string outputDir = ConfigurationManager.AppSettings["OutputDir"];
+			// build the config object
+			m_config = new ImageServiceConfig(dest, thumbSize, sourceName, logName, outputDir);
+			dm = new DirectoryManager(log, m_config, this.OnDirClosed);
+			guis = new GUIServer(9999, log, this.OnNewMessage);
+			m_logging.MessageRecieved += OnMessageRecieved;
+		}
+
         /// <summary>
-        /// method to close the server by commanding the handlers to close first
+        /// method to close the server
         /// </summary>
 		public void CloseServer()
-		{   // invoke close all directories CommandRecieved Event
-			CommandRecievedEventArgs args = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, "*");
-			CommandRecieved.Invoke(this, args);
-			// wait for all handlers to close
-			while ((CommandRecieved!= null) && (CommandRecieved.GetInvocationList().Length > 0))
-				System.Threading.Thread.Sleep(1000);
-			// update logger
-			m_logging.Log("Server is Closed", MessageTypeEnum.INFO);
+		{
+			dm.CloseServer();
+			guis.Close();
 		}
-        /// <summary>
-        /// OnDirClosed is summoned by the DirClose event and the method
-		/// gets the directory out from the event handlers list.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-		public void OnDirClosed(object sender, DirectoryCloseEventArgs e)
-        {
-            IDirectoryHandler d = (IDirectoryHandler)sender;
-            d.DirectoryClose -= OnDirClosed;
-        }
 
-    }
+		/// <summary>
+		/// OnNewMessage is summoned by the NewMessage event and the method
+		/// excute the NewMessage command.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="message">the message string</param>
+		public void OnNewMessage(object sender, string message)
+        {
+			JObject command = JObject.Parse(message);
+			int commandID = (int)command["commandID"];
+			// check the commandID for a matching response
+			if (commandID == (int)CommandEnum.GetConfigCommand)
+			{
+				// send config info
+				JObject response = new JObject();
+				response["commandID"] = commandID;
+				response["config"] = m_config.ToJSON();
+				((IClientHandler)sender).SendMessage(response.ToString());
+			}
+			else if (commandID == (int)CommandEnum.LogCommand)
+			{
+				// send log info
+				JObject response = new JObject();
+				response["commandID"] = commandID;
+				response["LogCollection"] = JsonConvert.SerializeObject(m_eventLogger.Entries);
+				((IClientHandler)sender).SendMessage(response.ToString());
+			}
+			else
+			{
+				// excute command
+				CommandRecievedEventArgs eventArgs = new CommandRecievedEventArgs(commandID,
+					((string)command["args"]).Split(';'), (string)command["path"]);
+				dm.WhenCommandRecieved(eventArgs);
+			}
+		}
+
+		/// <summary>
+		/// OnDirClosed is summoned by the DirClose event and the method
+		/// gets the directory out from the event handlers list, and updates all clients.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void OnDirClosed(object sender, DirectoryCloseEventArgs e)
+		{
+			IDirectoryHandler d = (IDirectoryHandler)sender;
+			d.DirectoryClose -= OnDirClosed;
+			// updte config object
+			lock (d.m_path)
+			{
+				m_config.handlers.Remove(d.m_path);
+			}
+			// update clients
+			JObject response = new JObject();
+			response["commandID"] = ((int)CommandEnum.CloseCommand).ToString();
+			response["path"] = d.m_path;
+			guis.Send(response.ToString());
+		}
+
+		/// <summary>
+		/// OnMessageRecieved is summoned by the MessageRecieved event of logging.
+		/// The method and updates all clients.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
+		public void OnMessageRecieved(object sender, MessageRecievedEventArgs args)
+		{
+			// update clients
+			JObject response = new JObject();
+			response["commandID"] = ((int)CommandEnum.LogUpdate).ToString();
+			response["Log"] = JsonConvert.SerializeObject(
+				new MessageRecievedEventArgs(args.Status, args.Message));
+			guis.Send(response.ToString());
+		}
+	}
 }

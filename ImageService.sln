@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService", "ImageService\ImageService.csproj", "{A6239FEB-89A3-45E1-913D-5892A97CF5DF}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServiceGUI", "ImageServiceGUI\ImageServiceGUI.csproj", "{8B0DAA74-FF8C-4D88-9E99-08B3278A8D1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceGuiCommunication", "ServiceGuiCommunication\ServiceGuiCommunication.csproj", "{7F674904-DA2F-4AF2-9353-97896D9E7C0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUICommunication", "ServiceGuiCommunication\GUICommunication.csproj", "{7F674904-DA2F-4AF2-9353-97896D9E7C0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +42,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B5AA645-DE57-484B-B746-CDC66EBBA52B}
 	EndGlobalSection
 EndGlobal

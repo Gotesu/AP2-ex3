@@ -38,7 +38,7 @@
   <ItemGroup>
     <Reference Include="Commands, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Commands.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\Commands.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -135,10 +135,17 @@
       <Project>{65aafd71-d983-4a8d-b2f1-1ff7d17e44d5}</Project>
       <Name>ImageService.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServiceGuiCommunication\ServiceGuiCommunication.csproj">
-      <Project>{7f674904-da2f-4af2-9353-97896d9e7c0b}</Project>
-      <Name>ServiceGuiCommunication</Name>
+    <ProjectReference Include="..\ImageService\ImageService.csproj">
+      <Project>{a6239feb-89a3-45e1-913d-5892a97cf5df}</Project>
+      <Name>ImageService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServiceGuiCommunication\GUICommunication.csproj">
+      <Project>{7f674904-da2f-4af2-9353-97896d9e7c0b}</Project>
+      <Name>GUICommunication</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

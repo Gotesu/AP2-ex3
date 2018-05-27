@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ServiceGuiCommunication.GUI_side;
+using GUICommunication.Client;
+using ImageService.Infrastructure.Enums;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ImageServiceGUI.LogTab
 {
     class LogModel:ILogModel
     {
-        private IGuiSide_client client;
+        private IGUIClient client;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged(string propName)
@@ -43,20 +41,31 @@ namespace ImageServiceGUI.LogTab
         }
         public LogModel()
         {
-            
-            client = GuiSide_client.get_instance();
+            client = GUIClient.Instance();
             entries = new ObservableCollection<EventLogEntry>();
-            buildLog(entries, client.getEntries());
-            EventLog log = new EventLog();
-            
+			client.NewMessage += UpdateLog;
         }
 
-        public void buildLog(ObservableCollection<EventLogEntry> modelList,EventLogEntryCollection fromService)
+        public void UpdateLog(object sender, string message)
         {
-            foreach (EventLogEntry entry in fromService)
-            {
-                modelList.Add(entry);
-            }
-        }
+			JObject command = JObject.Parse(message);
+			int commandID = (int)command["commandID"];
+			// check the commandID for a matching response
+			if (commandID == (int)CommandEnum.LogCommand)
+			{
+				EventLogEntryCollection fromService =
+					JsonConvert.DeserializeObject<EventLogEntryCollection>((string)command["LogCollection"]);
+				foreach (EventLogEntry entry in fromService)
+				{
+					entries.Add(entry);
+				}
+			}
+			else if (commandID == (int)CommandEnum.LogUpdate)
+			{
+				EventLogEntry newLog =
+					JsonConvert.DeserializeObject<EventLogEntry>((string)command["Log"]);
+				entries.Add(newLog);
+			}
+		}
     }
 }

@@ -16,10 +16,10 @@ namespace ImageService.Controller.Handlers
 	public class DirectoryHandler : IDirectoryHandler
 	{
 		#region Members
+		public string m_path { get; set; }                 // The Path of directory
 		private IImageController m_controller;              // The Image Processing Controller
 		private ILoggingService m_logging;
 		private FileSystemWatcher m_dirWatcher;             // The Watcher of the Dir
-		private string m_path { get; set; }                 // The Path of directory
 		private int m_tasks;								// the number of running tasks
 		private Object tLock = new Object();
 		#endregion
@@ -91,7 +91,7 @@ namespace ImageService.Controller.Handlers
 				// Stop monitoring
 				m_dirWatcher.EnableRaisingEvents = false;
 				// Stop getting commands
-				((ImageServer)sender).CommandRecieved -= OnCommandRecieved;
+				((DirectoryManager)sender).CommandRecieved -= OnCommandRecieved;
 				// wait for all task to end
 				while (m_tasks > 0)
 					System.Threading.Thread.Sleep(1000);

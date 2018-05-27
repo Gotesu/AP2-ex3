@@ -8,5 +8,6 @@ namespace GUICommunication.Server
 		void HandleClient();
 		void SendMessage(string message);
 		void OnSendAll(object sender, string message);
+		void OnCloseAll(object sender, EventArgs args);
 	}
 }

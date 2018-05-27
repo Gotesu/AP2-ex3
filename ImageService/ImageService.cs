@@ -88,7 +88,7 @@ namespace ImageService
             logger = new LoggingService();
             //"listening" to the logger's messaging
             logger.MessageRecieved += NewLogMessage;
-            server = new ImageServer(logger);
+            server = new ImageServer(logger, IS_eventLogger);
         }
 
         /* operation triggered by message is writing it to the event log */

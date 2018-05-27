@@ -7,6 +7,7 @@ namespace GUICommunication.Server
 		void Start();
 		void Send(string message);
 		void Stop();
+		void Close();
 		void OnClientClose(object sender, EventArgs args);
 	}
 }
