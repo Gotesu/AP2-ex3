@@ -20,13 +20,19 @@ namespace ImageServiceGUI.LogTab
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-
+        /// <summary>
+        /// event handler event of a new log entry, adding the entry and raising the notify event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="entry"></param>
         public void OnLogRecieved(object sender, EventLogEntry entry)
         {
             model_entries.Add(entry);
             NotifyPropertyChanged("entries");
         }
-
+        /// <summary>
+        /// data transfer from model to viewmodel and to view
+        /// </summary>
         private ObservableCollection<EventLogEntry> model_entries;
         public ObservableCollection<EventLogEntry> entries
         {
@@ -41,6 +47,9 @@ namespace ImageServiceGUI.LogTab
                 NotifyPropertyChanged("entries");
             }
         }
+        /// <summary>
+        /// ctor, using the connection client to get data from image service.
+        /// </summary>
         public LogModel()
         {
             
@@ -50,7 +59,11 @@ namespace ImageServiceGUI.LogTab
             EventLog log = new EventLog();
             
         }
-
+        /// <summary>
+        /// build observable log entry list from event log given by the client from the image service.
+        /// </summary>
+        /// <param name="modelList"></param>
+        /// <param name="fromService"></param>
         public void buildLog(ObservableCollection<EventLogEntry> modelList,EventLogEntryCollection fromService)
         {
             foreach (EventLogEntry entry in fromService)

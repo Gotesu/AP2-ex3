@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGUI.SettingsTab
 {
+    /// <summary>
+    /// this interface is used for the settings tab model (MVVM)
+    /// </summary>
     interface ISettingsModel : INotifyPropertyChanged
     {
         string OPD {get; set;}

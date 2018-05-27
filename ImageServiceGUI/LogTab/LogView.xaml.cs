@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace ImageServiceGUI.LogTab
 {
     /// <summary>
-    /// Interaction logic for LogView.xaml
+    /// Interaction logic for LogView.xaml MVVM pattern
     /// </summary>
     public partial class LogView : UserControl
     {

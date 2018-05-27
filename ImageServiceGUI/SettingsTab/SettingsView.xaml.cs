@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace ImageServiceGUI.SettingsTab
 {
     /// <summary>
-    /// Interaction logic for SettingsView.xaml
+    /// Interaction logic for SettingsView.xaml, data binding to view model
     /// </summary>
     public partial class SettingsView : UserControl
     {
