@@ -1,5 +1,4 @@
-﻿using GUICommunication.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +23,6 @@ namespace ImageServiceGUI
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = GUIClient.Instance();
         }
     }
 }
