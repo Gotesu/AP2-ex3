@@ -44,6 +44,9 @@ namespace ImageServiceGUI.LogTab
 			client = GUIClient.Instance();
 			entries = new ObservableCollection<EventLogEntry>();
 			client.NewMessage += UpdateLog;
+			JObject response = new JObject();
+			response["commandID"] = (int)CommandEnum.LogCommand;
+			client.SendMessage(response.ToString());
 		}
 
 		public void UpdateLog(object sender, string message)

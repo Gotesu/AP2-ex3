@@ -100,8 +100,11 @@ namespace ImageServiceGUI.SettingsTab
 			handlers = null;
             model_logName = "";
             model_source = "";
-            model_thumbSize = "";          
-        }
+            model_thumbSize = "";
+			JObject response = new JObject();
+			response["commandID"] = (int)CommandEnum.GetConfigCommand;
+			client.SendMessage(response.ToString());
+		}
 
 		public void UpdateSettings(object sender, string message)
 		{
