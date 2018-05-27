@@ -71,6 +71,7 @@
     <Compile Include="LogTab\LogViewModel.cs" />
     <Compile Include="LogTab\LogModel.cs" />
     <Compile Include="LogTab\TypeToColor.cs" />
+    <Compile Include="LogTab\TypeToMemo.cs" />
     <Compile Include="SettingsTab\ISettingsModel.cs" />
     <Compile Include="SettingsTab\SettingsModel.cs" />
     <Compile Include="SettingsTab\SettingsView.xaml.cs">
