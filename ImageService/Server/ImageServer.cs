@@ -22,7 +22,6 @@ namespace ImageService.Server
     public class ImageServer
 	{
 		#region Members
-		private ILoggingService m_logging;
 		private EventLog m_eventLogger;
 		private ImageServiceConfig m_config;
 		private DirectoryManager dm;
@@ -35,7 +34,6 @@ namespace ImageService.Server
         /// <param name="log"></param>
         public ImageServer(ILoggingService log, EventLog eventLogger)
         {
-			m_logging = log;
 			m_eventLogger = eventLogger;
 			//taking info given in the config
 			List<string> dest = ConfigurationManager.AppSettings["Handler"].Split(';').ToList();
@@ -47,7 +45,7 @@ namespace ImageService.Server
 			m_config = new ImageServiceConfig(dest, thumbSize, sourceName, logName, outputDir);
 			dm = new DirectoryManager(log, m_config, this.OnDirClosed);
 			guis = new GUIServer(9999, log, this.OnNewMessage);
-			m_logging.MessageRecieved += OnMessageRecieved;
+			eventLogger.EntryWritten += WhenEntryWritten;
 			guis.Start();
 		}
 
@@ -119,18 +117,18 @@ namespace ImageService.Server
 		}
 
 		/// <summary>
-		/// OnMessageRecieved is summoned by the MessageRecieved event of logging.
-		/// The method and updates all clients.
+		/// WhenEntryWritten is summoned by the EntryWritten event.
+		/// The method updates all the clients.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		public void OnMessageRecieved(object sender, MessageRecievedEventArgs args)
+		public void WhenEntryWritten(object sender,
+			System.Diagnostics.EntryWrittenEventArgs args)
 		{
 			// update clients
 			JObject response = new JObject();
 			response["commandID"] = ((int)CommandEnum.LogUpdate).ToString();
-			response["Log"] = JsonConvert.SerializeObject(
-				new MessageRecievedEventArgs(args.Status, args.Message));
+			response["Log"] = JsonConvert.SerializeObject(args.Entry);
 			guis.Send(response.ToString());
 		}
 	}
