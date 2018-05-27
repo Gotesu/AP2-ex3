@@ -5,6 +5,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using ImageService.Infrastructure.Enums;
 
 namespace GUICommunication.Server
 {
@@ -40,19 +42,19 @@ namespace GUICommunication.Server
 			// a communication task
 			Task task = new Task(() =>
 			{
-				using (NetworkStream stream = m_client.GetStream())
-				using (StreamReader reader = new StreamReader(stream))
-				using (StreamWriter writer = new StreamWriter(stream))
-				{
+                using (NetworkStream stream = m_client.GetStream())
+                using (BinaryReader reader = new BinaryReader(stream))
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
 					// a loop that continue wile communication open
 					while (m_client.Connected)
 					{
 						try
 						{
-							// read incomming message or feedback
-							string commandLine = reader.ReadLine();
-							// check if got a new message, or just feedback
-							if (commandLine != "ping")
+                            // read incomming message or feedback
+                            string commandLine = reader.ReadString();
+                            // check if got a new message, or just feedback
+                            if (commandLine != "ping")
 							{
 								// invoke NewMessage event
 								NewMessage.Invoke(this, commandLine);
@@ -61,11 +63,11 @@ namespace GUICommunication.Server
 							{
 								// check if there is a message to send
 								if ((m_messages == null) || (m_messages.Count <= 0))
-									writer.WriteLine("ping"); // send ping for feedback
+									writer.Write("ping"); // send ping for feedback
 								else
 								{
 									// send the message
-									writer.WriteLine(m_messages[0]);
+									writer.Write(m_messages[0]);
 									m_messages.RemoveAt(0);
 								}
 							}

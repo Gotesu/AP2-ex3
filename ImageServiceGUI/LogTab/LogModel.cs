@@ -42,7 +42,7 @@ namespace ImageServiceGUI.LogTab
 		public LogModel()
 		{
 			client = GUIClient.Instance();
-			entries = new ObservableCollection<EventLogEntry>();
+			model_entries = new ObservableCollection<EventLogEntry>();
 			client.NewMessage += UpdateLog;
 			JObject response = new JObject();
 			response["commandID"] = (int)CommandEnum.LogCommand;
@@ -60,14 +60,14 @@ namespace ImageServiceGUI.LogTab
 					JsonConvert.DeserializeObject<EventLogEntryCollection>((string)command["LogCollection"]);
 				foreach (EventLogEntry entry in fromService)
 				{
-					entries.Add(entry);
+					model_entries.Add(entry);
 				}
 			}
 			else if (commandID == (int)CommandEnum.LogUpdate)
 			{
 				EventLogEntry newLog =
 					JsonConvert.DeserializeObject<EventLogEntry>((string)command["Log"]);
-				entries.Add(newLog);
+				model_entries.Add(newLog);
 			}
 		}
 	}

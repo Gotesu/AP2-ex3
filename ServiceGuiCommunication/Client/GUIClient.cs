@@ -62,8 +62,8 @@ namespace GUICommunication.Client
 			Task task = new Task(() =>
 			{
 				using (NetworkStream stream = m_client.GetStream())
-				using (StreamReader reader = new StreamReader(stream))
-				using (StreamWriter writer = new StreamWriter(stream))
+				using (BinaryReader reader = new BinaryReader(stream))
+				using (BinaryWriter writer = new BinaryWriter(stream))
 				{
 					// a loop that continue wile communication open
 					while (m_client.Connected)
@@ -74,17 +74,17 @@ namespace GUICommunication.Client
 							{
 								// check if there is a message to send
 								if ((m_messages == null) || (m_messages.Count <= 0))
-									writer.WriteLine("ping"); // send ping for feedback
+									writer.Write("ping"); // send ping for feedback
 								else
 								{
 									// send the message
-									writer.WriteLine(m_messages[0]);
+									writer.Write(m_messages[0]);
 									m_messages.RemoveAt(0); // remove the message from the list
 								}
 							}
 							writer.Flush();
 							// read incomming message or feedback
-							string message = reader.ReadLine();
+							string message = reader.ReadString();
 							// check if got a new message, or just feedback
 							if (message != "ping")
 							{
