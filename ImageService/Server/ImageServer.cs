@@ -48,6 +48,7 @@ namespace ImageService.Server
 			dm = new DirectoryManager(log, m_config, this.OnDirClosed);
 			guis = new GUIServer(9999, log, this.OnNewMessage);
 			m_logging.MessageRecieved += OnMessageRecieved;
+			guis.Start();
 		}
 
         /// <summary>
