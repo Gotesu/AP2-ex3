@@ -14,15 +14,15 @@ namespace ImageService
         /// </summary>
         
         static void Main(string[] args)
-        //{
-        //     ServiceBase[] ServicesToRun = new ServiceBase[] { new ImageService(args) };
-        //     ServiceBase.Run(ServicesToRun);
-        // }
+        {
+             ServiceBase[] ServicesToRun = new ServiceBase[] { new ImageService(args) };
+            ServiceBase.Run(ServicesToRun);
+         }
 
 
         /* the Method which was turned into a comment is an alternatice main for testing
         static void Main(string[] args)
-        */
+        
         {
             if (Environment.UserInteractive)
             {
@@ -35,6 +35,7 @@ namespace ImageService
                 ServiceBase.Run(ServicesToRun);
             }
         }
+        */
         
         
     }
