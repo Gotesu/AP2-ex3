@@ -13,26 +13,30 @@ namespace GUICommunication.Client
 		// A list of messages that wait for sending
 		private List<string> m_messages = new List<string>();
 		private static GUIClient instance = null;
+        private static object obj = new object();
 
 		#region Properties
 		// The event that notifies about a new message being recieved
 		public event EventHandler<string> NewMessage;
 		#endregion
 
-		private GUIClient() {}
+		private GUIClient() {
+            int port = 9999;
+            Connect(port);
+        }
 
 		public static GUIClient Instance()
 		{
-			lock (instance)
-			{
-				if (instance == null)
-				{
-					instance = new GUIClient();
-
-				}
-				return instance;
-			}
-		}
+            if (instance == null)
+            {
+                lock (obj)
+                {
+                    if (instance == null)
+                        instance = new GUIClient();
+                }
+            }
+            return instance;
+        }
 
 		/// <summary>
 		/// The method makes the GUIClient starts handle
@@ -41,12 +45,15 @@ namespace GUICommunication.Client
 		/// <param name="port">the port number</param>
 		public void Connect(int port)
 		{
-			// check if client is already connected
-			lock (m_client)
-			{
-				if ((m_client != null) && (m_client.Connected))
-					return;
-			}
+            // check if client is already connected
+            if (m_client == null)
+            {
+                lock (obj)
+                {
+                    if ((m_client != null) && (m_client.Connected))
+                        return;
+                }
+            }
 			// open communication
 			IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
 			m_client = new TcpClient();
@@ -85,7 +92,7 @@ namespace GUICommunication.Client
 								NewMessage.Invoke(this, message);
 							}
 						}
-						catch (Exception e)
+						catch (Exception)
 						{
 							break;
 						}
