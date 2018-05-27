@@ -48,7 +48,6 @@ namespace ImageService.Server
 			eventLogger.EntryWritten += WhenEntryWritten;
 			guis.Start();
 		}
-
         /// <summary>
         /// method to close the server
         /// </summary>
