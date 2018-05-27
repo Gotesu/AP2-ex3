@@ -83,7 +83,6 @@ namespace GUICommunication.Server
 		/// <param name="message">the message string to send</param>
 		public void Send(string message)
 		{
-			m_logging.Log("Update all clients", MessageTypeEnum.INFO);
 			SendAll.Invoke(this, message);
 		}
 
