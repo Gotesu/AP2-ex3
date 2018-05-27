@@ -83,7 +83,7 @@ namespace GUICommunication.Server
 		/// <param name="message">the message string to send</param>
 		public void Send(string message)
 		{
-			SendAll.Invoke(this, message);
+			SendAll?.Invoke(this, message);
 		}
 
 		/// <summary>
