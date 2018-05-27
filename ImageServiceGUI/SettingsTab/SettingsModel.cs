@@ -116,15 +116,15 @@ namespace ImageServiceGUI.SettingsTab
 				// in case of GetConfigCommand
 				ImageServiceConfig fromService =
 					ImageServiceConfig.FromJSON((string)command["config"]);
-				handlers = new ObservableCollection<string>();
+				model_handlers = new ObservableCollection<string>();
 				foreach (string handler in fromService.handlers)
 				{
-					handlers.Add(handler);
+					model_handlers.Add(handler);
 				}
-				model_thumbSize = fromService.thumbSize.ToString();
+				this.model_thumbSize = fromService.thumbSize.ToString();
 				model_logName = fromService.logName;
 				model_OPD = fromService.OPD;
-				model_source = fromService.source;
+                model_source = fromService.source;
 			}
 			else if (commandID == (int)CommandEnum.CloseCommand)
 			{
