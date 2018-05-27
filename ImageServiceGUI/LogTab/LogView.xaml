@@ -16,6 +16,7 @@
             <Setter Property="TextBlock.Foreground" Value="Chocolate"/>
         </Style>
         <local:TypeToColor x:Key="converter" />
+        <local:TypeToMemo x:Key="woop" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource logTitle}">Log</TextBlock>
@@ -26,7 +27,7 @@
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Background" Value="{Binding EntryType, Converter={StaticResource converter}}" />
-                                <Setter Property="Text" Value="{Binding EntryType}" />
+                                <Setter Property="Text" Value="{Binding EntryType, Converter={StaticResource woop}}" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>

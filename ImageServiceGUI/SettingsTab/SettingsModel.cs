@@ -9,6 +9,9 @@ using ImageService.Infrastructure.Enums;
 
 namespace ImageServiceGUI.SettingsTab
 {
+    /// <summary>
+    /// model of the MVVM settings tab, used to maintain connection with the image service and store data passed to GUI
+    /// </summary>
     class SettingsModel : ISettingsModel
     {
 		private IGUIClient client;

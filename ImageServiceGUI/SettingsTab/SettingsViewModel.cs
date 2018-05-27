@@ -12,6 +12,9 @@ using System.Windows.Input;
 
 namespace ImageServiceGUI.SettingsTab
 {
+    /// <summary>
+    /// ViewModel of the settings tab, inherets Inotify because of data binding
+    /// </summary>
     class SettingsViewModel : INotifyPropertyChanged
     {
         private ISettingsModel model;
@@ -21,7 +24,7 @@ namespace ImageServiceGUI.SettingsTab
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
-
+        //output dir directory path
         public string OPD
         {
             get { return model.OPD; }
@@ -34,6 +37,7 @@ namespace ImageServiceGUI.SettingsTab
                 }
             }
         }
+        //thumbnail size
         public string thumbSize
         {
             get { return model.thumbSize; }
@@ -46,6 +50,7 @@ namespace ImageServiceGUI.SettingsTab
                 }
             }
         }
+        //log source
         public string source
         {
             get { return model.source; }
@@ -58,6 +63,7 @@ namespace ImageServiceGUI.SettingsTab
                 }
             }
         }
+        //log name
         public string logName
         {
             get { return model.logName; }
@@ -70,6 +76,7 @@ namespace ImageServiceGUI.SettingsTab
                 }
             }
         }
+        //handlers list
         public ObservableCollection<string> handlers
         {
             get
@@ -83,6 +90,10 @@ namespace ImageServiceGUI.SettingsTab
                 OnPropertyChanged("handlers");
             }
         }
+        /// <summary>
+        /// this code is for enabling the remove button on select of the handler.
+        /// selected model is the item in the item list that is selected by the user using the GUI
+        /// </summary>
         private string _selectedModel;
         public string SelectedModel
         {
@@ -93,25 +104,39 @@ namespace ImageServiceGUI.SettingsTab
                 OnPropertyChanged("SelectedModel");
                 //taken from the simple MVVM microsoft example
                 var command = this.removeCommand as DelegateCommand<object>;
+                //raising the can execute to enable execution of the remove button
                 command.RaiseCanExecuteChanged();
             }
         }
 
         public ICommand removeCommand { get; private set; }
-       
+       /// <summary>
+       /// remove button click removes handler
+       /// </summary>
+       /// <param name="sender"></param>
         private void remove_click(object sender)
         {
             handlers.Remove(SelectedModel);
         }
+        /// <summary>
+        /// canRemove is the enabling can execute function of the remove button, condition is that an item was selected from the list.
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
         private bool canRemove(object o)
         {
             if (SelectedModel != null)
                 return true;
             return false;
         }
+        /// <summary>
+        /// ctor
+        /// the viewModel holds a model instance
+        /// </summary>
         public SettingsViewModel()
         {
             model = new SettingsModel();
+            //making the button's command the remove command with canRemove condition
             this.removeCommand = new DelegateCommand<object>(this.remove_click, canRemove);
         }
 
