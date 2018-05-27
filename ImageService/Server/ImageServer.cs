@@ -72,7 +72,8 @@ namespace ImageService.Server
 			m_logging.Log("Server is Closed", MessageTypeEnum.INFO);
 		}
         /// <summary>
-        /// OnDirClosed is summoned by the DirClose event and the method gets the directory from the event handler list
+        /// OnDirClosed is summoned by the DirClose event and the method
+		/// gets the directory out from the event handlers list.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -1,9 +1,12 @@
-﻿using System.Net.Sockets;
-
-namespace ServiceGuiCommunication.Service_side
+﻿using System;
+namespace GUICommunication.Server
 {
-    public interface IClientHandler
-    {
-        void HandleClient(TcpClient client);
-    }
+	public interface IClientHandler
+	{
+		event EventHandler<string> NewMessage;
+		event EventHandler ClientClose;
+		void HandleClient();
+		void SendMessage(string message);
+		void OnSendAll(object sender, string message);
+	}
 }

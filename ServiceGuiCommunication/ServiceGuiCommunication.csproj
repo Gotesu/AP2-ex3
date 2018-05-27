@@ -45,9 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI_side\IGUIClient.cs" />
     <Compile Include="GUI_side\GuiSide_client.cs" />
     <Compile Include="GUI_side\IGuiSide_client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service_side\IGUIServer.cs" />
     <Compile Include="Service_side\IClientHandler.cs" />
     <Compile Include="Service_side\IServiceSide_server.cs" />
   </ItemGroup>
