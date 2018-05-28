@@ -18,11 +18,13 @@
         <local:TypeToColor x:Key="converter" />
         <local:TypeToMemo x:Key="woop" />
     </UserControl.Resources>
-    <StackPanel>
+    <Viewbox >
+        <StackPanel Width="500">
         <TextBlock Style="{StaticResource logTitle}">Log</TextBlock>
     <Grid>
-            <DataGrid ItemsSource="{Binding entries}" IsReadOnly="True" AutoGenerateColumns="False">
-                <DataGrid.Columns>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="250">
+                <DataGrid ItemsSource="{Binding entries}" IsReadOnly="True" AutoGenerateColumns="False" ScrollViewer.CanContentScroll="True">
+                    <DataGrid.Columns>
                 <DataGridTextColumn Width ="100" Header="Type" >
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
@@ -33,7 +35,10 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Width="*" Header="Message" Binding="{Binding Path=Message}"></DataGridTextColumn>
                 </DataGrid.Columns>
+                
             </DataGrid>
-    </Grid>
+            </ScrollViewer>
+        </Grid>
     </StackPanel>
+    </Viewbox>
 </UserControl>
