@@ -9,6 +9,7 @@ using ImageService.Infrastructure.Enums;
 using System;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace ImageServiceGUI.SettingsTab
 {
@@ -95,12 +96,14 @@ namespace ImageServiceGUI.SettingsTab
                 NotifyPropertyChanged("thumbSize");
             }
         }
+        private static object _lock = new object();
         public SettingsModel()
         {
             client = GUIClient.Instance();
 			client.NewMessage += UpdateSettings;
 			model_OPD = "";
 			model_handlers =new ObservableCollection<string>();
+            BindingOperations.EnableCollectionSynchronization(model_handlers, _lock);
             model_logName = "";
             model_source = "";
             model_thumbSize = "";
@@ -122,14 +125,9 @@ namespace ImageServiceGUI.SettingsTab
                     ImageServiceConfig.FromJSON((string)command["config"]);
                 foreach (string handler in fromService.handlers)
                 {
-                    try
-                    {
-                        model_handlers.Add(handler);
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    model_handlers.Add(handler);
                 }
+                  
                 model_thumbSize = fromService.thumbSize.ToString();
                 model_logName = fromService.logName;
                 model_OPD = fromService.OPD;
