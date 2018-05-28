@@ -106,7 +106,14 @@ namespace GUICommunication.Client
 							{
 								// check if there is a message to send
 								if ((m_messages == null) || (m_messages.Count <= 0))
-									writer.Write("ping"); // send ping for feedback
+                                    try
+                                    {
+                                        writer.Write("ping"); // send ping for feedback
+                                    }
+                                    catch (Exception)
+                                    {
+                                        connected = false;
+                                    } 
 								else
 								{
 									// send the message
@@ -123,6 +130,8 @@ namespace GUICommunication.Client
                                 // invoke NewMessage event
 								NewMessage.Invoke(this, message);
 							}
+                            if (message == null)
+                                connected = false;
 						}
 						catch (Exception e)
 						{
