@@ -6,6 +6,7 @@ using ImageService.Infrastructure.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace ImageServiceGUI.LogTab
 {
@@ -40,11 +41,13 @@ namespace ImageServiceGUI.LogTab
 				NotifyPropertyChanged("entries");
 			}
 		}
-		public LogModel()
+        private static object _lock = new object();
+        public LogModel()
 		{
 			client = GUIClient.Instance();
 			model_entries = new ObservableCollection<EventLogEntry>();
-			client.NewMessage += UpdateLog;
+            BindingOperations.EnableCollectionSynchronization(model_entries, _lock);
+            client.NewMessage += UpdateLog;
 			JObject response = new JObject();
 			response["commandID"] = (int)CommandEnum.LogCommand;
 			client.SendMessage(response.ToString());
