@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using ImageService.Infrastructure.Enums;
+using System.Threading;
 
 namespace ImageServiceGUI.SettingsTab
 {
@@ -94,6 +95,7 @@ namespace ImageServiceGUI.SettingsTab
         }
         public SettingsModel()
         {
+            var uiContext = SynchronizationContext.Current;
             client = GUIClient.Instance();
 			client.NewMessage += UpdateSettings;
 			model_OPD = "";

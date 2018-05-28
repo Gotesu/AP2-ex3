@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace GUICommunication.Client
 {
@@ -58,8 +59,9 @@ namespace GUICommunication.Client
 			IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
 			m_client = new TcpClient();
 			m_client.Connect(ep);
-			// a communication task
-			Task task = new Task(() =>
+
+            // a communication task
+            Task task = new Task(() =>
 			{
 				using (NetworkStream stream = m_client.GetStream())
 				using (BinaryReader reader = new BinaryReader(stream))
