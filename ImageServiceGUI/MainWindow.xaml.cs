@@ -24,6 +24,7 @@ namespace ImageServiceGUI
         public MainWindow()
         {
             InitializeComponent();
+            //this context is to check if connected to color accordingly
             this.DataContext = GUIClient.Instance();
         }
     }

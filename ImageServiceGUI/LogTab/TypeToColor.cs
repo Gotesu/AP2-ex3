@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace ImageServiceGUI.LogTab
 {
+    /// <summary>
+    /// convertor from type to color for event log entries
+    /// </summary>
     class TypeToColor : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

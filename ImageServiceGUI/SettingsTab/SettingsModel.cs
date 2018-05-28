@@ -19,12 +19,17 @@ namespace ImageServiceGUI.SettingsTab
     class SettingsModel : ISettingsModel
     {
 		private IGUIClient client;
+        //data binding property change event
 		public event PropertyChangedEventHandler PropertyChanged;
-
+        /// <summary>
+        /// notify on property change
+        /// </summary>
+        /// <param name="propName"></param>
         public void NotifyPropertyChanged(string propName) {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
+        //colection of handlers
         private ObservableCollection<string> model_handlers;
         public ObservableCollection<string> handlers
         {
@@ -39,6 +44,7 @@ namespace ImageServiceGUI.SettingsTab
                 NotifyPropertyChanged("handlers");
             }
         }
+        //again data binding protocol
         private string model_logName;
         public string logName
         {
@@ -53,7 +59,7 @@ namespace ImageServiceGUI.SettingsTab
                 NotifyPropertyChanged("logName");
             }
         }
-
+        //same
         private string model_OPD;
         public string OPD
         {
@@ -68,6 +74,7 @@ namespace ImageServiceGUI.SettingsTab
                 NotifyPropertyChanged("OPD");
             }
         }
+        //same
         private string model_source;
         public string source
         {
@@ -82,6 +89,7 @@ namespace ImageServiceGUI.SettingsTab
                 NotifyPropertyChanged("source");
             }
         }
+        //same
         public string model_thumbSize;
         public string thumbSize
         {
@@ -96,23 +104,35 @@ namespace ImageServiceGUI.SettingsTab
                 NotifyPropertyChanged("thumbSize");
             }
         }
+        //lock objext
         private static object _lock = new object();
+        /// <summary>
+        /// ctor init as blank and than updating using event (different func)
+        /// </summary>
         public SettingsModel()
         {
             client = GUIClient.Instance();
+            //update setting on new message event
 			client.NewMessage += UpdateSettings;
+            //blank properties
 			model_OPD = "";
 			model_handlers =new ObservableCollection<string>();
             BindingOperations.EnableCollectionSynchronization(model_handlers, _lock);
             model_logName = "";
             model_source = "";
             model_thumbSize = "";
+            //requesting config data
 			JObject response = new JObject();
 			response["commandID"] = (int)CommandEnum.GetConfigCommand;
 			client.SendMessage(response.ToString());
+            //waiting for update with delay
             Task.Delay(500).Wait();
 		}
-
+        /// <summary>
+        /// on new message, updates the config
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="message"></param>
         public void UpdateSettings(object sender, string message)
         {
             JObject command = JObject.Parse(message);
@@ -141,7 +161,10 @@ namespace ImageServiceGUI.SettingsTab
                     model_handlers.Remove(dir);
             }
         }
-
+        /// <summary>
+        /// removing handler on remove click
+        /// </summary>
+        /// <param name="path"></param>
 		public void RemoveHandler (string path)
 		{
 			JObject response = new JObject();

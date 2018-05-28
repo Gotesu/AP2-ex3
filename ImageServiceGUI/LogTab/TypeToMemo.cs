@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace ImageServiceGUI.LogTab
 {
+    /// <summary>
+    /// convertor from type to type name for event log entries
+    /// </summary>
     public class TypeToMemo : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -22,6 +25,7 @@ namespace ImageServiceGUI.LogTab
                 case "Warning":
                     return "WARNING";
                 default:
+                    //made info the default
                     return "INFO";
             }
         }

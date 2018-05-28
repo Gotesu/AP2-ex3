@@ -14,7 +14,11 @@ namespace GUICommunication.Client
         // A list of messages that wait for sending
         private List<string> m_messages = new List<string>();
         private static GUIClient instance = null;
+        //locking obj
         private static object obj = new object();
+        /// <summary>
+        /// connected bool databinding protocol
+        /// </summary>
         private bool _connected;
         public bool connected
         {
@@ -35,6 +39,7 @@ namespace GUICommunication.Client
 		#region Properties
 		// The event that notifies about a new message being recieved
 		public event EventHandler<string> NewMessage;
+        //property changed for connected bool
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
         {
@@ -42,12 +47,17 @@ namespace GUICommunication.Client
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
         #endregion
-
+        /// <summary>
+        /// ctor init port
+        /// </summary>
         private GUIClient() {
             int port = 9999;
             Connect(port);
         }
-
+        /// <summary>
+        /// made GuiClient singelton because the severak models use him
+        /// </summary>
+        /// <returns></returns>
 		public static GUIClient Instance()
 		{
             if (instance == null)
@@ -133,10 +143,10 @@ namespace GUICommunication.Client
                             if (message == null)
                                 connected = false;
 						}
-						catch (Exception e)
+						catch (Exception)
 						{
-							break;
-						}
+                            connected = false;
+                        }
 					}
 				}
 				// close communication (if still open)
@@ -145,10 +155,6 @@ namespace GUICommunication.Client
 			task.Start();
 		}
 
-		public bool IsConnected()
-		{
-            return connected;
-		}
 
 		/// <summary>
 		/// The method disconnects the client from the server,

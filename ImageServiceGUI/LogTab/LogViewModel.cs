@@ -11,13 +11,16 @@ namespace ImageServiceGUI.LogTab
 {
     class LogViewModel
     {
+        //model instance
         private ILogModel model;
+        //property change for binding
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
+        //entries 
         public ObservableCollection<EventLogEntry> entries
         {
             get
