@@ -18,9 +18,9 @@ namespace ImageServiceGUI
                 case "True":
                     return "Blue";
                 case "False":
-                    return "Grey";
+                    return "Gray";
                 default:
-                    return "Grey";
+                    return "Gray";
             }
         }
 
