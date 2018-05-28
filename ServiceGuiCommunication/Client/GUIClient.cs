@@ -7,14 +7,14 @@ using System.Collections.Generic;
 
 namespace GUICommunication.Client
 {
-	public class GUIClient : IGUIClient
-	{
-		private TcpClient m_client;
-		// A list of messages that wait for sending
-		private List<string> m_messages = new List<string>();
-		private static GUIClient instance = null;
+    public class GUIClient : IGUIClient
+    {
+        private TcpClient m_client;
+        // A list of messages that wait for sending
+        private List<string> m_messages = new List<string>();
+        private static GUIClient instance = null;
         private static object obj = new object();
-        public bool connected = false;
+        public bool connected;
 
 		#region Properties
 		// The event that notifies about a new message being recieved

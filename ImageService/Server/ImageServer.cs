@@ -12,6 +12,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using ImageService.Controller.Handlers;
 using ImageService.Logging.Modal;
+using System.Threading.Tasks;
 
 namespace ImageService.Server
 {

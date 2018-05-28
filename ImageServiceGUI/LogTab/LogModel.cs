@@ -48,7 +48,6 @@ namespace ImageServiceGUI.LogTab
 			JObject response = new JObject();
 			response["commandID"] = (int)CommandEnum.LogCommand;
 			client.SendMessage(response.ToString());
-            Task.Delay(500).Wait();
         }
 
 		public void UpdateLog(object sender, string message)
