@@ -14,6 +14,7 @@ namespace GUICommunication.Client
 		private List<string> m_messages = new List<string>();
 		private static GUIClient instance = null;
         private static object obj = new object();
+        public bool connected = false;
 
 		#region Properties
 		// The event that notifies about a new message being recieved
@@ -57,9 +58,18 @@ namespace GUICommunication.Client
 			// open communication
 			IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
 			m_client = new TcpClient();
-			m_client.Connect(ep);
+            try
+            {
+                m_client.Connect(ep);
+                connected = true;
+            }
+            catch (Exception)
+            {
+                connected = false;
+                return;
+            }
 			// a communication task
-			Task task = new Task(() =>
+			Task task = new Task(() => 
 			{
 				using (NetworkStream stream = m_client.GetStream())
 				using (BinaryReader reader = new BinaryReader(stream))
@@ -88,7 +98,7 @@ namespace GUICommunication.Client
 							// check if got a new message, or just feedback
 							if (message != "ping")
 							{
-								// invoke NewMessage event
+                                // invoke NewMessage event
 								NewMessage.Invoke(this, message);
 							}
 						}
@@ -106,9 +116,7 @@ namespace GUICommunication.Client
 
 		public bool IsConnected()
 		{
-			if (m_client != null)
-				return m_client.Connected;
-			return false;
+            return connected;
 		}
 
 		/// <summary>

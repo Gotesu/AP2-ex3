@@ -6,6 +6,9 @@ using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using ImageService.Infrastructure.Enums;
+using System;
+using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace ImageServiceGUI.SettingsTab
 {
@@ -104,34 +107,41 @@ namespace ImageServiceGUI.SettingsTab
 			JObject response = new JObject();
 			response["commandID"] = (int)CommandEnum.GetConfigCommand;
 			client.SendMessage(response.ToString());
+            Task.Delay(500).Wait();
 		}
 
-		public void UpdateSettings(object sender, string message)
-		{
-			JObject command = JObject.Parse(message);
-			int commandID = (int)command["commandID"];
-			// check the commandID for a matching response
-			if (commandID == (int)CommandEnum.GetConfigCommand)
-			{
+        public void UpdateSettings(object sender, string message)
+        {
+            JObject command = JObject.Parse(message);
+            int commandID = (int)command["commandID"];
+            // check the commandID for a matching response
+            if (commandID == (int)CommandEnum.GetConfigCommand)
+            {
                 // in case of GetConfigCommand
                 ImageServiceConfig fromService =
-					ImageServiceConfig.FromJSON((string)command["config"]);
-				foreach (string handler in fromService.handlers)
-				{
-					model_handlers.Add(handler);
-				}
-				model_thumbSize = fromService.thumbSize.ToString();
-				model_logName = fromService.logName;
-				model_OPD = fromService.OPD;
+                    ImageServiceConfig.FromJSON((string)command["config"]);
+                foreach (string handler in fromService.handlers)
+                {
+                    try
+                    {
+                        model_handlers.Add(handler);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                model_thumbSize = fromService.thumbSize.ToString();
+                model_logName = fromService.logName;
+                model_OPD = fromService.OPD;
                 model_source = fromService.source;
-			}
-			else if (commandID == (int)CommandEnum.CloseCommand)
-			{
-				// in case of CloseCommand update
-				string dir = (string)command["path"];
-				if (model_handlers != null)
-					model_handlers.Remove(dir);
-			}
-		}
-	}
+            }
+            else if (commandID == (int)CommandEnum.CloseCommand)
+            {
+                // in case of CloseCommand update
+                string dir = (string)command["path"];
+                if (model_handlers != null)
+                    model_handlers.Remove(dir);
+            }
+        }
+    }
 }

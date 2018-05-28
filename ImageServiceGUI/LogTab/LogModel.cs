@@ -5,6 +5,7 @@ using GUICommunication.Client;
 using ImageService.Infrastructure.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace ImageServiceGUI.LogTab
 {
@@ -47,7 +48,8 @@ namespace ImageServiceGUI.LogTab
 			JObject response = new JObject();
 			response["commandID"] = (int)CommandEnum.LogCommand;
 			client.SendMessage(response.ToString());
-		}
+            Task.Delay(500).Wait();
+        }
 
 		public void UpdateLog(object sender, string message)
 		{
