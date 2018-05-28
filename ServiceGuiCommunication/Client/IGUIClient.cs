@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
+
 namespace GUICommunication.Client
 {
-	public interface IGUIClient
+	public interface IGUIClient : INotifyPropertyChanged
 	{
 		event EventHandler<string> NewMessage;
 		void Connect(int port);

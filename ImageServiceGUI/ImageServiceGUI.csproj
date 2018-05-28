@@ -78,6 +78,7 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsTab\SettingsViewModel.cs" />
+    <Compile Include="BoolToColor.cs" />
     <Page Include="LogTab\LogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

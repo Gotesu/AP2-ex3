@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace GUICommunication.Client
 {
@@ -14,14 +15,35 @@ namespace GUICommunication.Client
         private List<string> m_messages = new List<string>();
         private static GUIClient instance = null;
         private static object obj = new object();
-        public bool connected;
+        private bool _connected;
+        public bool connected
+        {
+            get
+            {
+                return _connected;
+            }
+            set
+            {
+                if(_connected != value)
+                {
+                    _connected = value;
+                    NotifyPropertyChanged("connected");
+                }
+            }
+        }
 
 		#region Properties
 		// The event that notifies about a new message being recieved
 		public event EventHandler<string> NewMessage;
-		#endregion
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
+        #endregion
 
-		private GUIClient() {
+        private GUIClient() {
             int port = 9999;
             Connect(port);
         }

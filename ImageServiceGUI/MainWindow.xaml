@@ -8,7 +8,13 @@
         xmlns:log ="clr-namespace:ImageServiceGUI.LogTab"
         mc:Ignorable="d"
         Title="Image Service GUI" Height="350" Width="525">
-    <Grid>
+    <Window.Resources>
+        <local:BoolToColor x:Key="converter" />
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="{Binding connected,Converter={StaticResource converter}}" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="{Binding connected,Converter={StaticResource converter}}">
         <TabControl>
             <TabItem Header="Settings">
                 <settings:SettingsView />
