@@ -104,7 +104,7 @@ namespace GUICommunication.Server
 		{
 			listener.Stop();
 			// invoke close all directories CommandRecieved Event
-			CloseAll.Invoke(this, null);
+			CloseAll?.Invoke(this, null);
 			// wait for all handlers to close
 			while ((CloseAll != null) && (CloseAll.GetInvocationList().Length > 0))
 				System.Threading.Thread.Sleep(1000);
@@ -122,6 +122,7 @@ namespace GUICommunication.Server
 			m_logging.Log("Client closed", MessageTypeEnum.INFO);
 			IClientHandler ch = (IClientHandler)sender;
 			SendAll -= ch.OnSendAll;
+			CloseAll -= ch.OnCloseAll;
 			ch.NewMessage -= ExecuteCommand;
 		}
 	}
