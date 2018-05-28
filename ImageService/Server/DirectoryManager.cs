@@ -45,7 +45,6 @@ namespace ImageService.Server
             {
                 IDirectoryHandler dH = new DirectoryHandler(m_controller, m_logging);
                 CommandRecieved += dH.OnCommandRecieved;
-                dH.DirectoryClose += OnDirClosed;
 				dH.DirectoryClose += update;
 				try
                 {
@@ -63,24 +62,13 @@ namespace ImageService.Server
 		public void CloseServer()
 		{   // invoke close all directories CommandRecieved Event
 			CommandRecievedEventArgs args = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, "*");
-			CommandRecieved.Invoke(this, args);
+			CommandRecieved?.Invoke(this, args);
 			// wait for all handlers to close
 			while ((CommandRecieved!= null) && (CommandRecieved.GetInvocationList().Length > 0))
 				System.Threading.Thread.Sleep(1000);
 			// update logger
 			m_logging.Log("Server is Closed", MessageTypeEnum.INFO);
 		}
-        /// <summary>
-        /// OnDirClosed is summoned by the DirClose event and the method
-		/// gets the directory out from the event handlers list.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-		public void OnDirClosed(object sender, DirectoryCloseEventArgs e)
-        {
-            IDirectoryHandler d = (IDirectoryHandler)sender;
-            d.DirectoryClose -= OnDirClosed;
-        }
 
 		/// <summary>
 		/// The method invokes the CommandRecieved event.
@@ -88,7 +76,7 @@ namespace ImageService.Server
 		/// <param name="args">the arguments for the event handler</param>
 		public void WhenCommandRecieved(CommandRecievedEventArgs args)
 		{
-			CommandRecieved.Invoke(this, args);
+			CommandRecieved?.Invoke(this, args);
 		}
 	}
 }

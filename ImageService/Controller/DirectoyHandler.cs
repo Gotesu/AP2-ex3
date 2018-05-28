@@ -98,7 +98,7 @@ namespace ImageService.Controller.Handlers
 				// update logger
 				m_logging.Log("DirectoyHandler is Closed", MessageTypeEnum.INFO);
 				// invoking the DirectoryClose event
-				DirectoryClose.Invoke(this, new DirectoryCloseEventArgs(m_path, "DirectoyHandler is Closed"));
+				DirectoryClose?.Invoke(this, new DirectoryCloseEventArgs(m_path, "DirectoyHandler is Closed"));
 			});
 		}
 
