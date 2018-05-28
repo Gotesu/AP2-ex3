@@ -141,5 +141,14 @@ namespace ImageServiceGUI.SettingsTab
                     model_handlers.Remove(dir);
             }
         }
+
+		public void RemoveHandler (string path)
+		{
+			JObject response = new JObject();
+			response["commandID"] = ((int)CommandEnum.CloseCommand).ToString();
+			response["args"] = "";
+			response["path"] = path;
+			client.SendMessage(response.ToString());
+		}
     }
 }

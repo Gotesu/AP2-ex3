@@ -18,5 +18,6 @@ namespace ImageServiceGUI.SettingsTab
         string source { get; set; }
         string thumbSize { get; set; }
         ObservableCollection<string> handlers { get; set; }
-    }
+		void RemoveHandler(string path);
+	}
 }
