@@ -97,7 +97,7 @@ namespace ImageServiceGUI.SettingsTab
             client = GUIClient.Instance();
 			client.NewMessage += UpdateSettings;
 			model_OPD = "";
-			handlers = null;
+			model_handlers =new ObservableCollection<string>();
             model_logName = "";
             model_source = "";
             model_thumbSize = "";
@@ -113,15 +113,14 @@ namespace ImageServiceGUI.SettingsTab
 			// check the commandID for a matching response
 			if (commandID == (int)CommandEnum.GetConfigCommand)
 			{
-				// in case of GetConfigCommand
-				ImageServiceConfig fromService =
+                // in case of GetConfigCommand
+                ImageServiceConfig fromService =
 					ImageServiceConfig.FromJSON((string)command["config"]);
-				model_handlers = new ObservableCollection<string>();
 				foreach (string handler in fromService.handlers)
 				{
 					model_handlers.Add(handler);
 				}
-				this.model_thumbSize = fromService.thumbSize.ToString();
+				model_thumbSize = fromService.thumbSize.ToString();
 				model_logName = fromService.logName;
 				model_OPD = fromService.OPD;
                 model_source = fromService.source;

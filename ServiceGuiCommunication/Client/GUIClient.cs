@@ -92,7 +92,7 @@ namespace GUICommunication.Client
 								NewMessage.Invoke(this, message);
 							}
 						}
-						catch (Exception)
+						catch (Exception e)
 						{
 							break;
 						}
