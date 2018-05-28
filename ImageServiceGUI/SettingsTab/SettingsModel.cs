@@ -107,7 +107,7 @@ namespace ImageServiceGUI.SettingsTab
 			JObject response = new JObject();
 			response["commandID"] = (int)CommandEnum.GetConfigCommand;
 			client.SendMessage(response.ToString());
-            Task.Delay(50).Wait();
+            Task.Delay(500).Wait();
 		}
 
         public void UpdateSettings(object sender, string message)
