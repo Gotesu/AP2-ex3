@@ -117,7 +117,7 @@ namespace ImageServiceGUI.SettingsTab
        /// <param name="sender"></param>
         private void remove_click(object sender)
         {
-            handlers.Remove(SelectedModel);
+            model.RemoveHandler(SelectedModel);
         }
         /// <summary>
         /// canRemove is the enabling can execute function of the remove button, condition is that an item was selected from the list.
