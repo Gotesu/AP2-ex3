@@ -84,7 +84,9 @@ namespace ImageService.Server
 				// send log info
 				JObject response = new JObject();
 				response["commandID"] = commandID;
-				response["LogCollection"] = JsonConvert.SerializeObject(m_eventLogger.Entries);
+				EventLogEntry[] array = new EventLogEntry[m_eventLogger.Entries.Count];
+				m_eventLogger.Entries.CopyTo(array, 0);
+				response["LogCollection"] = JsonConvert.SerializeObject(array);
 				((IClientHandler)sender).SendMessage(response.ToString());
 			}
 			else

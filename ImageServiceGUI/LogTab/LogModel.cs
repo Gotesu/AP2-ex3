@@ -58,8 +58,8 @@ namespace ImageServiceGUI.LogTab
 			// check the commandID for a matching response
 			if (commandID == (int)CommandEnum.LogCommand)
 			{
-				EventLogEntryCollection fromService =
-					JsonConvert.DeserializeObject<EventLogEntryCollection>((string)command["LogCollection"]);
+				EventLogEntry[] fromService =
+					JsonConvert.DeserializeObject<EventLogEntry[]>((string)command["LogCollection"]);
 				foreach (EventLogEntry entry in fromService)
 				{
 					model_entries.Add(entry);
