@@ -43,7 +43,19 @@
         <input type="text" id="stat" size="5" />
         <p> Number of Images: </p>
         <input type="text" id="imgNum" size="5" />
-        <input type="button" id="Connect" value="Search" />
-        <ul id="lstProducts"></ul>
+        <p></p>
+        <input type="button" id="btnConnect" value="Connect to Service" />
     </div>
 </div>
+
+<script>
+    $("#btnConnect").click(function () {
+        var input = {
+            status:$("#stat").val(),
+            num: $("#imgNum").val()
+        };
+        $.post("@Url.Action("GetStatus")", input, function (data) {
+            $("#lstProducts").append("<li>" + data.FirstName + " " + data.LastName + " : $" + data.Salary + "</li>");
+        }, "json");
+    });
+</script>

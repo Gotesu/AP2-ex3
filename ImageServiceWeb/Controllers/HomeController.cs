@@ -14,7 +14,13 @@ namespace ImageServiceWeb.Controllers
         public ActionResult HomeView()
         {
             HomeModel model = new HomeModel();
+            IGUICLient client = new IGUICLient();
             return View(model.GetStudents());
+        }
+        [HttpPost]
+        public bool GetStatus()
+        {
+
         }
     }
 }
