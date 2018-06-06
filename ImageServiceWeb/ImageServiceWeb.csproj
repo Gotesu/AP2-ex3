@@ -201,7 +201,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceGuiCommunication\GUICommunication.csproj">
+      <Project>{7f674904-da2f-4af2-9353-97896d9e7c0b}</Project>
+      <Name>GUICommunication</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
