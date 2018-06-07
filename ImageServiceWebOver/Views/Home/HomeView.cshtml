@@ -39,23 +39,25 @@
     </table>
     <div>
         <h2>Service Status</h2>
-        <p> Status: </p>
-        <input type="text" id="stat" size="5" />
-        <p> Number of Images: </p>
-        <input type="text" id="imgNum" size="5" />
-        <p></p>
-        <input type="button" id="btnConnect" value="Connect to Service" />
+        <table>
+            <tr>
+                <td>Id:  </td>
+                <td><p type="text" id="prodId" size="5"></p></td>
+            </tr>
+            <tr>
+                <td>Name:  </td>
+                <td><p type="text" id="prodName" size="5"></p></td>
+            </tr>
+        </table>
+        <button type="button" id="btnStart" style="margin:10px">Get Data</button>
     </div>
 </div>
 
 <script>
-    $("#btnConnect").click(function () {
-        var input = {
-            status:$("#stat").val(),
-            num: $("#imgNum").val()
-        };
-        $.post("@Url.Action("GetStatus")", input, function (data) {
-            $("#lstProducts").append("<li>" + data.FirstName + " " + data.LastName + " : $" + data.Salary + "</li>");
-        }, "json");
+    $("#btnStart").click(function () {
+        $.getJSON("@Url.Action("GetEmployee")", function (empl) {
+            $("#prodId").text(empl.FirstName);
+            $("#prodName").text(empl.LastName);
+        });
     });
 </script>

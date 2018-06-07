@@ -9,5 +9,6 @@ namespace GUICommunication.Client
 		void Connect(int port);
 		void Disconnect();
 		void SendMessage(string message);
+        bool isConnected();
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GUICommunication.Client;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,6 +9,14 @@ namespace ImageServiceWeb.Models
 {
     public class HomeModel
     {
+        private IGUIClient client;
+        public bool connected;
+        public HomeModel() {
+            client = GUIClient.Instance();
+            client.Connect(9999);
+            connected = client.isConnected();
+        }
+
         public List<Student> GetStudents()
         {
             string xmlData = HttpContext.Current.Server.MapPath("~/App_Data/StudentsInfo.xml");//Path of the xml script  
@@ -22,6 +31,11 @@ namespace ImageServiceWeb.Models
                             ID = Convert.ToInt32(rows[2].ToString()), //Convert row to int
                         }).ToList();
             return students;
+        }
+
+        public int numOfImages()
+        {
+            return 31;
         }
     }
 }

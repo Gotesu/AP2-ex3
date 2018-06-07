@@ -183,5 +183,10 @@ namespace GUICommunication.Client
 				m_messages.Add(message);
 			}
 		}
-	}
+
+        public bool isConnected()
+        {
+           return connected;
+        }
+    }
 }

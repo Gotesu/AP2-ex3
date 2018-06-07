@@ -73,7 +73,7 @@ namespace GUICommunication.Server
 							}
 							writer.Flush();
 						}
-						catch (Exception e)
+						catch (Exception)
 						{
 							break;
 						}
