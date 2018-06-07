@@ -26,7 +26,7 @@ namespace ImageServiceWeb.Controllers
         }
 
         [HttpGet]
-        public ActionResult AjaxView()
+        public ActionResult Home()
         {
             return View(model.GetStudents());
         }
