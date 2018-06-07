@@ -140,6 +140,7 @@ namespace GUICommunication.Client
                                 // invoke NewMessage event
 								NewMessage.Invoke(this, message);
 							}
+                            connected = true;
                             if (message == null)
                                 connected = false;
 						}

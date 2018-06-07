@@ -12,7 +12,6 @@ namespace ImageServiceWeb.Models
         private IGUIClient client;
         public HomeModel() {
             client = GUIClient.Instance();
-            client.Connect(9999);
         }
 
         public List<Student> GetStudents()
