@@ -10,11 +10,9 @@ namespace ImageServiceWeb.Models
     public class HomeModel
     {
         private IGUIClient client;
-        public bool connected;
         public HomeModel() {
             client = GUIClient.Instance();
             client.Connect(9999);
-            connected = client.isConnected();
         }
 
         public List<Student> GetStudents()
@@ -36,6 +34,10 @@ namespace ImageServiceWeb.Models
         public int numOfImages()
         {
             return 31;
+        }
+        public bool connectionStatus()
+        {
+            return client.isConnected();
         }
     }
 }

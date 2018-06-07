@@ -10,7 +10,7 @@ namespace ImageServiceWeb.Controllers
 {
     public class MainController : Controller
     {
-        private HomeModel model;
+        static HomeModel model = new HomeModel();
         static List<Employee> employees = new List<Employee>()
         {
           new Employee  { FirstName = "Moshe", LastName = "Aron", Email = "Stam@stam", Salary = 10000, Phone = "08-8888888" },
@@ -28,7 +28,6 @@ namespace ImageServiceWeb.Controllers
         [HttpGet]
         public ActionResult AjaxView()
         {
-            model = new HomeModel();
             return View(model.GetStudents());
         }
 
@@ -36,8 +35,11 @@ namespace ImageServiceWeb.Controllers
         public JObject GetEmployee()
         {
             JObject data = new JObject();
-            data["Status"] = "Active";
-            data["Number"] = "31";
+            if(model.connectionStatus())
+                data["Status"] = "Active";
+            else
+                data["Status"] = "Not Active";
+            data["Number"] = model.numOfImages().ToString();
             return data;
         }
 
