@@ -10,6 +10,7 @@ namespace ImageServiceWeb.Controllers
 {
     public class MainController : Controller
     {
+        private HomeModel model;
         static List<Employee> employees = new List<Employee>()
         {
           new Employee  { FirstName = "Moshe", LastName = "Aron", Email = "Stam@stam", Salary = 10000, Phone = "08-8888888" },
@@ -27,15 +28,16 @@ namespace ImageServiceWeb.Controllers
         [HttpGet]
         public ActionResult AjaxView()
         {
-            return View();
+            model = new HomeModel();
+            return View(model.GetStudents());
         }
 
         [HttpGet]
         public JObject GetEmployee()
         {
             JObject data = new JObject();
-            data["FirstName"] = "Kuky";
-            data["LastName"] = "Mopy";
+            data["Status"] = "Active";
+            data["Number"] = "31";
             return data;
         }
 
