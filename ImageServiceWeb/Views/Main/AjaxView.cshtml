@@ -37,30 +37,30 @@
         }
 
     </table>
-    <h2>Employee json Get</h2>
+    <h2>Service Base Information</h2>
     <table>
         <tr>
             <td>Service Status:  </td>
         </tr>
         <tr>
-        <td><p type="text" id="ServiceStat" size="5"></p></td>
+        <td><p type="text" id="ServiceStat" size="5" style="margin:20px"></p></td>
         </tr>
         <tr>
             <td>Number of Images:  </td>
         </tr>
         <tr>
-            <td><p type="text" id="imgNum" size="5"></p></td>
+            <td><p type="text" id="imgNum" size="5" style="margin:20px"></p></td>
         </tr>
     </table>
-     <button type="button" id="btnStart" style="margin:10px">Get Service Info</button>
+     <button type="button" id="btnStat" style="margin:10px">Get Service Info</button>
 
 </div>
 
 <script>
-    $("#btnStart").click(function () {
-        $.getJSON("@Url.Action("GetEmployee")", function (empl) {
-            $("#ServiceStat").text(empl.Status);
-            $("#imgNum").text(empl.Number);
+    $("#btnStat").click(function () {
+        $.getJSON("@Url.Action("GetEmployee")", function (data) {
+            $("#ServiceStat").text(data.Status);
+            $("#imgNum").text(data.Number);
         });
     });
 
