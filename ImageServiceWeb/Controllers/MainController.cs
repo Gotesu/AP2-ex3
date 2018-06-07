@@ -32,7 +32,7 @@ namespace ImageServiceWeb.Controllers
         }
 
         [HttpGet]
-        public JObject GetEmployee()
+        public JObject GetStatus()
         {
             JObject data = new JObject();
             if(model.connectionStatus())

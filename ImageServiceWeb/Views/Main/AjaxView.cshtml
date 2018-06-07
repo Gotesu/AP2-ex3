@@ -58,7 +58,7 @@
 
 <script>
     $("#btnStat").click(function () {
-        $.getJSON("@Url.Action("GetEmployee")", function (data) {
+        $.getJSON("@Url.Action("GetStatus")", function (data) {
             $("#ServiceStat").text(data.Status);
             $("#imgNum").text(data.Number);
         });
