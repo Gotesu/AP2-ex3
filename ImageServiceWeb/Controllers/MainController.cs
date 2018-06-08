@@ -26,9 +26,8 @@ namespace ImageServiceWeb.Controllers
         {
             
             ImageServiceConfig config = configModel.getConfig();
-            SelectList handlers = new SelectList(config.handlers);
             ViewBag.config = config;
-            ViewBag.handlers = handlers;
+            ViewBag.handlers = config.handlers;
             return View();
         }
 

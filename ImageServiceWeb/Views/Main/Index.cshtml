@@ -7,7 +7,7 @@
     var handlers = ViewBag.handlers;
 }
 
-<h2>Index</h2>
+<h2>Configuration Information</h2>
 <div>
     <table>
         <tr>
@@ -16,20 +16,28 @@
         </tr>
         <tr>
             <td>source</td>
-            <td><p type="text" id="opd" size="5" style="margin:20px">@data.source</p></td>
+            <td><p type="text" id="source" size="5" style="margin:20px">@data.source</p></td>
         </tr>
         <tr>
             <td>Log Name</td>
-            <td><p type="text" id="opd" size="5" style="margin:20px">@data.logName</p></td>
+            <td><p type="text" id="logName" size="5" style="margin:20px">@data.logName</p></td>
         </tr>
         <tr>
             <td>ThumbSize</td>
-            <td><p type="text" id="opd" size="5" style="margin:20px">@data.thumbSize.ToString()</p></td>
+            <td><p type="text" id="thumbSize" size="5" style="margin:20px">@data.thumbSize.ToString()</p></td>
         </tr>
         <tr> <td>List of Handlers</td></tr>
-        
     </table>
 </div>
+            @foreach(var hand in ViewBag.handlers)
+            {
+                <li>
+                    <button type="button" id="@hand.ToString()" style="margin:10px">@hand.ToString()</button>
+                </li>
+            }
+
+
+
 
 <script>
     $("#opd").text(model(OPD));
