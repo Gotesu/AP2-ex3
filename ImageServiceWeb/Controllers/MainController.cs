@@ -116,11 +116,11 @@ namespace ImageServiceWeb.Controllers
                     if (emp.ID.Equals(id))
                     {
                         emp.copy(empT);
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Config");
                     }
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Config");
             }
             catch
             {
