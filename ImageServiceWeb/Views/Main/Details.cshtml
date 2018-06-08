@@ -1,33 +1,40 @@
 ﻿@model IEnumerable<ImageServiceWeb.Models.Employee>
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Log";
 }
 
-<h2>Details</h2>
+<h2>Log</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div>
+    <div>
+        <h2>Filter Log entry Types</h2>
+        <p> Requested Type: </p>
+        <input type="text" id="txtType" size="5" />
+        <input type="button" id="btnSearch" value="Search" />
+        <ul id="lstProducts"></ul>
+    </div>
+
+</div>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Salary)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th></th>
-    </tr>
+<tr>
+    <th>
+        @Html.DisplayNameFor(model => model.FirstName)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.LastName)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Salary)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Phone)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Email)
+    </th>
+    <th></th>
+</tr>
 
 @foreach (var item in Model) {
     <tr>
@@ -53,5 +60,17 @@
         </td>
     </tr>
 }
-
 </table>
+
+<script>
+    $("#btnSearch").click(function () {
+        var input = {
+            type:$("#txtType").val()
+        };
+        $.post("@Url.Action("GetEmployee")", input, function (data) {
+            $("#lstProducts").append("<li>" + data.FirstName + " " + data.LastName + " : $" + data.Salary + "</li>");
+        }, "json");
+    });
+
+</script>
+
