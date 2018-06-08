@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ImageService.Infrastructure;
 using ImageServiceWeb.Models;
 
 namespace ImageServiceWeb.Controllers
@@ -11,6 +12,7 @@ namespace ImageServiceWeb.Controllers
     public class MainController : Controller
     {
         static HomeModel model = new HomeModel();
+        static ConfigModel configModel = new ConfigModel();
         static List<Employee> employees = new List<Employee>()
         {
           new Employee  { FirstName = "Moshe", LastName = "Aron", Email = "Stam@stam", Salary = 10000, Phone = "08-8888888" },
@@ -22,6 +24,11 @@ namespace ImageServiceWeb.Controllers
         // GET: First
         public ActionResult Index()
         {
+            
+            ImageServiceConfig config = configModel.getConfig();
+            SelectList handlers = new SelectList(config.handlers);
+            ViewBag.config = config;
+            ViewBag.handlers = handlers;
             return View();
         }
 

@@ -80,6 +80,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -182,6 +183,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageService.Infrastructure\ImageService.Infrastructure.csproj">
+      <Project>{06396ABB-2928-4A0A-B8D8-CCC3B62F560D}</Project>
+      <Name>ImageService.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ServiceGuiCommunication\GUICommunication.csproj">
       <Project>{7f674904-da2f-4af2-9353-97896d9e7c0b}</Project>
       <Name>GUICommunication</Name>

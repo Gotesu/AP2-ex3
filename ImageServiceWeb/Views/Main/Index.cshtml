@@ -1,7 +1,36 @@
-﻿
+﻿@model IEnumerable<Newtonsoft.Json.Linq.JObject>
 @{
     ViewBag.Title = "Index";
 }
+@{
+    var data = ViewBag.config;
+    var handlers = ViewBag.handlers;
+}
 
 <h2>Index</h2>
-Welcome to Example!!!!
+<div>
+    <table>
+        <tr>
+            <td>OPD</td>
+            <td><p type="text" id="opd" size="5" style="margin:20px">@data.OPD</p></td>
+        </tr>
+        <tr>
+            <td>source</td>
+            <td><p type="text" id="opd" size="5" style="margin:20px">@data.source</p></td>
+        </tr>
+        <tr>
+            <td>Log Name</td>
+            <td><p type="text" id="opd" size="5" style="margin:20px">@data.logName</p></td>
+        </tr>
+        <tr>
+            <td>ThumbSize</td>
+            <td><p type="text" id="opd" size="5" style="margin:20px">@data.thumbSize.ToString()</p></td>
+        </tr>
+        <tr> <td>List of Handlers</td></tr>
+        
+    </table>
+</div>
+
+<script>
+    $("#opd").text(model(OPD));
+</script>
