@@ -155,6 +155,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

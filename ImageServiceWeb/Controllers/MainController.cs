@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,6 +14,7 @@ namespace ImageServiceWeb.Controllers
     {
         static HomeModel model = new HomeModel();
         static ConfigModel configModel = new ConfigModel();
+        static LogModel logModel = new LogModel();
         static List<Employee> employees = new List<Employee>()
         {
           new Employee  { FirstName = "Moshe", LastName = "Aron", Email = "Stam@stam", Salary = 10000, Phone = "08-8888888" },
@@ -21,6 +23,7 @@ namespace ImageServiceWeb.Controllers
           new Employee   { FirstName = "Dor", LastName = "Nisim", Email = "Stam@stam", Salary = 20, Phone = "08-8888888" },
           new Employee   { FirstName = "Dor", LastName = "Nisim", Email = "Stam@stam", Salary = 700, Phone = "08-8888888" }
         };
+        static List<Entry> entries = new List<Entry>();
         // GET: First
         public ActionResult Config()
         {
@@ -69,7 +72,30 @@ namespace ImageServiceWeb.Controllers
         // GET: First/Details
         public ActionResult Details()
         {
-            return View(employees);
+            foreach (EventLogEntry ent in logModel.entries)
+            {
+                Entry entry = new Entry();
+                switch (ent.EntryType.ToString())
+                {
+                    case "Information":
+                        entry.Type = "INFO";
+                        break;
+                    case "Error":
+                        entry.Type = "Error";
+                        break;
+                    case "Warning":
+                        entry.Type =  "WARNING";
+                        break;
+                    default:
+                        //made info the default
+                       entry.Type = "INFO";
+                        break;
+                }
+
+                entry.Message = ent.Message;
+                entries.Add(entry);
+            }
+            return View(entries);
         }
 
         // GET: First/Create

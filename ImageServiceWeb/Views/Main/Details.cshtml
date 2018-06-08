@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ImageServiceWeb.Models.Employee>
+﻿@model IEnumerable<ImageServiceWeb.Models.Entry>
 
 @{
     ViewBag.Title = "Log";
@@ -19,19 +19,10 @@
 <table class="table">
 <tr>
     <th>
-        @Html.DisplayNameFor(model => model.FirstName)
+        @Html.DisplayNameFor(model => model.Type)
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.LastName)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.Salary)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.Phone)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.Email)
+        @Html.DisplayNameFor(model => model.Message)
     </th>
     <th></th>
 </tr>
@@ -39,24 +30,15 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
+            @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LastName)
+            @Html.DisplayFor(modelItem => item.Message)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Salary)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id= item.ID }) |
+            @Html.ActionLink("Edit", "Edit", new { id= item.Type }) |
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.Type })
         </td>
     </tr>
 }
