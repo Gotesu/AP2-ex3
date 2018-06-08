@@ -22,7 +22,7 @@ namespace ImageServiceWeb.Controllers
           new Employee   { FirstName = "Dor", LastName = "Nisim", Email = "Stam@stam", Salary = 700, Phone = "08-8888888" }
         };
         // GET: First
-        public ActionResult Index()
+        public ActionResult Config()
         {
             
             ImageServiceConfig config = configModel.getConfig();
@@ -142,6 +142,11 @@ namespace ImageServiceWeb.Controllers
                 i++;
             }
             return RedirectToAction("Error");
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
     }
 }
