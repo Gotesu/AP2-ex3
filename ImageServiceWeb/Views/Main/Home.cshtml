@@ -59,7 +59,7 @@
 <script>
     $("#btnStat").click(function () {
         $.getJSON("@Url.Action("GetStatus")", function (data) {
-            $("#ServiceStat").text(data.Status);
+            $("#ServiceStat").text(data.Status).css("color", "blue").css("font-weight", "bolder");
             $("#imgNum").text(data.Number);
         });
     });

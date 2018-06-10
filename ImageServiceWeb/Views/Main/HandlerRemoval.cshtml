@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Remove";
+    var path = ViewBag.handler;
+}
+
+<h2>Halt!</h2>
+
+<p>Are you sure you want to close the handler <mark>@path</mark> ?
+<table>
+    <tr>
+        <td><button id =@path.ToString() onclick="accept(id)">OK</button></td>
+        <td><button id="btnCancel" onclick="back()">Cancel</button></td>
+    </tr>
+</table>
+
+<script>
+    function back() {
+        var url = '@Url.Action("Config","Main")';
+        window.location.href = url;
+    }
+
+    function accept(path) {
+        var url = '@Url.Action("Remove","Main")?path=' + path;
+        document.getElementById("btnCancel").disabled = true;
+        document.getElementById(path).disabled = true;
+        $.get(url);
+        var url2 = '@Url.Action("Config","Main")';
+        window.location.href = url2;
+    }
+</script>

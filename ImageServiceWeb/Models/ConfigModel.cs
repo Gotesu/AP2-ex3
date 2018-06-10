@@ -17,6 +17,7 @@ namespace ImageServiceWeb.Models
 {
     public class ConfigModel
     {
+        public bool removed = true;
         private ImageServiceConfig confi;
         private IGUIClient client;
         //data binding property change event
@@ -160,7 +161,11 @@ namespace ImageServiceWeb.Models
                 // in case of CloseCommand update
                 string dir = (string)command["path"];
                 if (model_handlers != null)
+                {
                     model_handlers.Remove(dir);
+                    confi.handlers.Remove(dir);
+                    removed = true;
+                }
             }
         }
         /// <summary>
@@ -169,6 +174,7 @@ namespace ImageServiceWeb.Models
         /// <param name="path"></param>
 		public void RemoveHandler(string path)
         {
+            removed = false;
             JObject response = new JObject();
             response["commandID"] = ((int)CommandEnum.CloseCommand).ToString();
             response["args"] = "";

@@ -143,8 +143,8 @@
     <Content Include="scripts\jquery-3.0.0.slim.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
-    <Content Include="Views\Main\Create.cshtml" />
-    <Content Include="Views\Main\Details.cshtml" />
+    <Content Include="Views\Main\Photos.cshtml" />
+    <Content Include="Views\Main\Log.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -154,7 +154,6 @@
     </Compile>
     <Compile Include="photos\PhotosModel.cs" />
     <Compile Include="Models\ConfigModel.cs" />
-    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LogModel.cs" />
@@ -174,7 +173,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Main\Edit.cshtml" />
     <Content Include="Views\Main\Home.cshtml" />
     <Content Include="scripts\jquery-3.0.0.min.map" />
     <Content Include="scripts\jquery-3.0.0.slim.min.map" />
