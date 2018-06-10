@@ -160,7 +160,10 @@ namespace ImageServiceWeb.Models
                 // in case of CloseCommand update
                 string dir = (string)command["path"];
                 if (model_handlers != null)
+                {
                     model_handlers.Remove(dir);
+                    confi.handlers.Remove(dir);
+                }
             }
         }
         /// <summary>
