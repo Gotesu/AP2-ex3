@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -184,6 +185,43 @@ namespace ImageServiceWeb.Controllers
         {
             ViewBag.handler = path;
             return View();
+        }
+
+        public void Remove(string path)
+        {
+            configModel.RemoveHandler(path);
+            configModel.PropertyChanged += Removed;
+            _done = false;
+        }
+
+        private void Removed(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "handlers")
+            {
+                configModel.PropertyChanged -= Removed;
+                done = true;
+            }
+        }
+
+        private bool _done;
+        public bool done
+        {
+            get
+            {
+                return _done;
+            }
+
+            set
+            {
+                _done = value;
+                NotifyPropertyChanged("done");
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

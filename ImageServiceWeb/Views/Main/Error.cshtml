@@ -20,6 +20,10 @@
     }
 
     function accept(path) {
-        window.alert(path);
+        var url = '@Url.Action("Remove","Main")?path=' + path;
+        $.get(url);
+        document.getElementById("btnCancel").disabled = true;
+        document.getElementById(path).disabled = true;
+
     }
 </script>
