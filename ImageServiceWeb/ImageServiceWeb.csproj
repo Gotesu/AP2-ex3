@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -147,10 +148,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="photos\MainController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="photos\PhotosModel.cs" />
     <Compile Include="Models\ConfigModel.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Entry.cs" />
@@ -178,6 +180,7 @@
     <Content Include="scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Views\Main\Error.cshtml" />
     <Content Include="Views\Main\reqDetails.cshtml" />
+    <Content Include="photos\Photos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -194,6 +197,9 @@
       <Project>{7f674904-da2f-4af2-9353-97896d9e7c0b}</Project>
       <Name>GUICommunication</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
