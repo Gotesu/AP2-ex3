@@ -24,8 +24,6 @@
         document.getElementById("btnCancel").disabled = true;
         document.getElementById(path).disabled = true;
         $.get(url);
-        document.getElementById("btnCancel").disabled = false;
-        document.getElementById(path).disabled = false;
         var url2 = '@Url.Action("Config","Main")';
         window.location.href = url2;
     }

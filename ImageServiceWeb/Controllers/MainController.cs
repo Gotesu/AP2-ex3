@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ImageService.Infrastructure;
@@ -35,6 +36,9 @@ namespace ImageServiceWeb.Controllers
             {
                 ViewBag.config = config;
                 ViewBag.handlers = config.handlers;
+                while (!configModel.removed)
+                    //waiting for handler removal and to avoid busy waiting we use delay
+                    Task.Delay(1000);
             }
             else
             {
@@ -181,7 +185,7 @@ namespace ImageServiceWeb.Controllers
             return RedirectToAction("Error");
         }
 
-        public ActionResult Error(string path)
+        public ActionResult HandlerRemoval(string path)
         {
             ViewBag.handler = path;
             return View();
@@ -190,38 +194,6 @@ namespace ImageServiceWeb.Controllers
         public void Remove(string path)
         {
             configModel.RemoveHandler(path);
-            configModel.PropertyChanged += Removed;
-            _done = false;
-        }
-
-        private void Removed(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "handlers")
-            {
-                configModel.PropertyChanged -= Removed;
-                done = true;
-            }
-        }
-
-        private bool _done;
-        public bool done
-        {
-            get
-            {
-                return _done;
-            }
-
-            set
-            {
-                _done = value;
-                NotifyPropertyChanged("done");
-            }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged(string propName)
-        {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
     }
 }
