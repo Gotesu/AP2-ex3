@@ -1,7 +1,25 @@
 ﻿@{
-    ViewBag.Title = "Error";
+    ViewBag.Title = "Remove";
+    var path = ViewBag.handler;
 }
 
-<h2>Error</h2>
+<h2>Halt!</h2>
 
-<p>Employee not found!!!</p>
+<p>Are you sure you want to close the handler <mark>@path</mark> ?
+<table>
+    <tr>
+        <td><button id =@path.ToString() onclick="accept(id)">OK</button></td>
+        <td><button id="btnCancel" onclick="back()">Cancel</button></td>
+    </tr>
+</table>
+
+<script>
+    function back() {
+        var url = '@Url.Action("Config","Main")';
+        window.location.href = url;
+    }
+
+    function accept(path) {
+        window.alert(path);
+    }
+</script>

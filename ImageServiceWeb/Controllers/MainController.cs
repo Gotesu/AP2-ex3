@@ -24,14 +24,23 @@ namespace ImageServiceWeb.Controllers
           new Employee   { FirstName = "Dor", LastName = "Nisim", Email = "Stam@stam", Salary = 700, Phone = "08-8888888" }
         };
         static List<Entry> entries = new List<Entry>();
-        static List<Entry> requestedEntries = new List<Entry>();
         // GET: First
         public ActionResult Config()
         {
             
             ImageServiceConfig config = configModel.getConfig();
-            ViewBag.config = config;
-            ViewBag.handlers = config.handlers;
+
+            if (config != null)
+            {
+                ViewBag.config = config;
+                ViewBag.handlers = config.handlers;
+            }
+            else
+            {
+                config = new ImageServiceConfig(null, 0, "not available", "not available", "not available");
+                ViewBag.config = config;
+            }
+
             return View();
         }
 
@@ -71,7 +80,7 @@ namespace ImageServiceWeb.Controllers
         }
 
         // GET: First/Details
-        public ActionResult Details()
+        public ActionResult Log()
         {
             foreach (EventLogEntry ent in logModel.entries)
             {
@@ -97,16 +106,6 @@ namespace ImageServiceWeb.Controllers
                 entries.Add(entry);
             }
             return View(entries);
-        }
-
-        public ActionResult reqDetails(string type)
-        {
-            requestedEntries.Clear();
-            foreach (Entry ent in entries)
-            {
-                requestedEntries.Add(ent);
-            }
-            return View(requestedEntries);
         }
 
         // GET: First/Create
@@ -181,8 +180,9 @@ namespace ImageServiceWeb.Controllers
             return RedirectToAction("Error");
         }
 
-        public ActionResult Error()
+        public ActionResult Error(string path)
         {
+            ViewBag.handler = path;
             return View();
         }
     }
