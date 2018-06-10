@@ -204,5 +204,38 @@ namespace ImageService.Model
 				return e.Message;
 			}
 		}
+
+		/// <summary>
+		/// The function checks if the given file is an image.
+		/// </summary>
+		/// <param name="path">The string for file's path</param>
+		/// <returns>True if file is image type, and false otherwise</returns>
+		public bool IsImage(string path)
+		{
+			return ( e.FullPath.EndsWith(".jpg") || e.FullPath.EndsWith(".png") ||
+					 e.FullPath.EndsWith(".gif") || e.FullPath.EndsWith(".bmp") ||
+					 e.FullPath.EndsWith(".JPG") || e.FullPath.EndsWith(".PNG") ||
+					 e.FullPath.EndsWith(".GIF") || e.FullPath.EndsWith(".BMP") );
+		}
+
+		/// <summary>
+		/// The function counts the number of image files in a given directory.
+		/// </summary>
+		/// <param name="path">The string for directory's path</param>
+		/// <returns>The number of image files in the directory</returns>
+		public int ImagesNumber(string path)
+		{
+			// get all files into an array
+			string[] files = Directory.GetFiles(path, "*",
+				SearchOption.AllDirectories);
+			// count image files
+			int count = 0;
+			foreach (string file in files) {
+				//check file type
+				if (IsImage(file))
+					count++; // increase count value
+			}
+			return count;
+		}
 	}
 }
