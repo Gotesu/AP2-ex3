@@ -177,6 +177,7 @@
     <Content Include="scripts\jquery-3.0.0.min.map" />
     <Content Include="scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Views\Main\Error.cshtml" />
+    <Content Include="Views\Main\reqDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
