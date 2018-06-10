@@ -10,13 +10,13 @@
     <div>
         <h2>Filter Log entry Types</h2>
         <p> Requested Type: </p>
-        <input type="text" id="txtType" size="5" />
-        <input type="button" id="btnSearch" value="filter" />
+        <input type="text" id="txtType" size="5" placeholder="Type" />
+        <input type="button" onclick ="btnFilter()" value="filter" />
         <ul id="lstProducts"></ul>
     </div>
 
 </div>
-<table class="table">
+<table class="table" id ="logTable">
 <tr>
     <th>
         @Html.DisplayNameFor(model => model.Type)
@@ -40,9 +40,29 @@
 </table>
 
 <script>
-    $("#btnSearch").click(function () {
-        $("p").html("Hello from jQuery").css("color", "blue");
-    });
-
+    function btnFilter() {
+        //td will be our first column for each row, i is index
+        var td, i;
+        //getting input and making it not caps sensitive
+        var input = document.getElementById("txtType");
+        var filter = input.value.toUpperCase();
+        //getting our table
+        var table = document.getElementById("logTable");
+        //each row is tr
+        var tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                //indexOf method searches the filter value in our first column which is the type
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    //case filter input is in first column (or blank), in this case we show
+                    tr[i].style.display = "";
+                } else {
+                    //case it isnt, so we hide.
+                    tr[i].style.display = "none";
+                }
+                }
+            }
+        }
 </script>
 
