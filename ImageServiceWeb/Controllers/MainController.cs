@@ -24,6 +24,7 @@ namespace ImageServiceWeb.Controllers
           new Employee   { FirstName = "Dor", LastName = "Nisim", Email = "Stam@stam", Salary = 700, Phone = "08-8888888" }
         };
         static List<Entry> entries = new List<Entry>();
+        static List<Entry> requestedEntries = new List<Entry>();
         // GET: First
         public ActionResult Config()
         {
@@ -96,6 +97,16 @@ namespace ImageServiceWeb.Controllers
                 entries.Add(entry);
             }
             return View(entries);
+        }
+
+        public ActionResult reqDetails(string type)
+        {
+            requestedEntries.Clear();
+            foreach (Entry ent in entries)
+            {
+                requestedEntries.Add(ent);
+            }
+            return View(requestedEntries);
         }
 
         // GET: First/Create

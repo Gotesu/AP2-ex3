@@ -11,7 +11,7 @@
         <h2>Filter Log entry Types</h2>
         <p> Requested Type: </p>
         <input type="text" id="txtType" size="5" />
-        <input type="button" id="btnSearch" value="Search" />
+        <input type="button" id="btnSearch" value="filter" />
         <ul id="lstProducts"></ul>
     </div>
 
@@ -35,23 +35,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.Message)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id= item.Type }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Type })
-        </td>
     </tr>
 }
 </table>
 
 <script>
     $("#btnSearch").click(function () {
-        var input = {
-            type:$("#txtType").val()
-        };
-        $.post("@Url.Action("GetEmployee")", input, function (data) {
-            $("#lstProducts").append("<li>" + data.FirstName + " " + data.LastName + " : $" + data.Salary + "</li>");
-        }, "json");
+        $("p").html("Hello from jQuery").css("color", "blue");
     });
 
 </script>
