@@ -212,10 +212,10 @@ namespace ImageService.Model
 		/// <returns>True if file is image type, and false otherwise</returns>
 		public bool IsImage(string path)
 		{
-			return ( e.FullPath.EndsWith(".jpg") || e.FullPath.EndsWith(".png") ||
-					 e.FullPath.EndsWith(".gif") || e.FullPath.EndsWith(".bmp") ||
-					 e.FullPath.EndsWith(".JPG") || e.FullPath.EndsWith(".PNG") ||
-					 e.FullPath.EndsWith(".GIF") || e.FullPath.EndsWith(".BMP") );
+			return ( path.EndsWith(".jpg") || path.EndsWith(".png") ||
+					 path.EndsWith(".gif") || path.EndsWith(".bmp") ||
+					 path.EndsWith(".JPG") || path.EndsWith(".PNG") ||
+					 path.EndsWith(".GIF") || path.EndsWith(".BMP") );
 		}
 
 		/// <summary>
