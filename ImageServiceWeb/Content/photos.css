@@ -1,0 +1,9 @@
+﻿.thumbnail {
+	position: relative;
+	padding: 0px;
+	margin-bottom: 20px;
+}
+
+.thumbnail img {
+	border-radius: 50%;
+}

@@ -1,9 +1,39 @@
-﻿
-
+﻿@using ImageServiceWeb.Struct;
+@model IEnumerable<ImageServiceWeb.Models.PhotosModel>
 @{
     ViewBag.Title = "Photos";
 }
+<link rel="stylesheet"
+      type="text/css"
+      href="~/Content/photos.css">
 
 <h2>Photos</h2>
+@for (int i=0; i < ViewBag.photos.Count; i++)
+{
+    <div class="col-xs-18 col-sm-6 col-md-3">
+        <div class="thumbnail">
+            <img src=@ViewBag.photos[i].Thumbnail>
+            <div class="caption">
+                <h4>Photo details</h4>
+                <p>Name: @ViewBag.photos[i].Name</p>
+                <p>Date: @ViewBag.photos[i].Date</p>
+                <p>
+                    <button type="button" class="btn btn-info btn-xs" id=@i.ToString() onclick="View(id)">View</button>
+                    <button type="button" class="btn btn-danger btn-xs" id=@i.ToString() onclick="Delete(id)">Delete</button>
+                </p>
+            </div>
+        </div>
+    </div>
+}
 
-<p>Elad this is for you</p>
+ <script>
+     function View(photoNum) {
+         window.location.href =  '@Url.Action("PhotoView", "Main", new { photoNum = "NUM" })'.replace("NUM", photoNum);
+         window.location.href = './ViewPhoto';
+     }
+
+    function Delete(photoNum) {
+        var url = '@Url.Action("Delete", "Main")?photoNum=' + photoNum;
+        $.get(url);
+    }
+</script>

@@ -9,14 +9,18 @@ using System.Web;
 using System.Web.Mvc;
 using ImageService.Infrastructure;
 using ImageServiceWeb.Models;
+using System.IO;
+using ImageServiceWeb.Struct;
 
 namespace ImageServiceWeb.Controllers
 {
     public class MainController : Controller
     {
-        static HomeModel model = new HomeModel();
+		private int view = 0;
+		static HomeModel model = new HomeModel();
         static ConfigModel configModel = new ConfigModel();
-        static LogModel logModel = new LogModel();
+		static PhotosModel photosModel = new PhotosModel();
+		static LogModel logModel = new LogModel();
         static List<Entry> entries = new List<Entry>();
         // GET: First
         public ActionResult Config()
@@ -47,13 +51,40 @@ namespace ImageServiceWeb.Controllers
             return View(model.GetStudents());
         }
 
-        [HttpGet]
-        public ActionResult Photos()
-        {
-            return View();
-        }
+		[HttpGet]
+		public ActionResult Photos()
+		{
+			ViewBag.photos = photosModel.photos;
+			photosModel.PropertyChanged += OnChangePhotos;
+			return View();
+		}
 
-        [HttpGet]
+		public void OnChangePhotos(object sender, PropertyChangedEventArgs args)
+		{
+			ViewBag.photos = photosModel.photos;
+		}
+
+		[HttpGet]
+		public ActionResult ViewPhoto()
+		{
+			ViewBag.viewPhoto = photosModel.photos[view];
+			ViewBag.photoNum = view;
+			return View();
+		}
+
+		public void Delete(string photoNum)
+		{
+			photosModel.DeleteFile(Int32.Parse(photoNum) );
+		}
+
+		public void PhotoView(string photoNum)
+		{
+			view = Int32.Parse(photoNum);
+			ViewBag.viewPhoto = photosModel.photos[view];
+			ViewBag.photoNum = view;
+		}
+
+		[HttpGet]
         public JObject GetStatus()
         {
             JObject data = new JObject();
@@ -64,8 +95,6 @@ namespace ImageServiceWeb.Controllers
             data["Number"] = model.numOfImages().ToString();
             return data;
         }
-
-        
 
         // GET: First/Details
         public ActionResult Log()

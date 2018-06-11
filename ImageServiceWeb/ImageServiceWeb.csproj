@@ -126,9 +126,18 @@
     <Content Include="App_Data\StudentsInfo.xml" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\photos.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="OutputDir\1932\05\Throning_goddess_%28Persephone%29.jpg" />
+    <Content Include="OutputDir\2009\01\675px-Caryatid.jpg" />
+    <Content Include="OutputDir\2018\06\Ancient_Egyptian_Goddess.jpg" />
+    <Content Include="OutputDir\2018\08\-Cariatide_dall%27eretteo.jpg" />
+    <Content Include="OutputDir\Thumbnails\1932\05\Throning_goddess_%28Persephone%29.jpg" />
+    <Content Include="OutputDir\Thumbnails\2009\01\675px-Caryatid.jpg" />
+    <Content Include="OutputDir\Thumbnails\2018\06\Ancient_Egyptian_Goddess.jpg" />
+    <Content Include="OutputDir\Thumbnails\2018\08\-Cariatide_dall%27eretteo.jpg" />
     <Content Include="scripts\ai.0.22.19-build00125.js" />
     <Content Include="scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="scripts\bootstrap.js" />
@@ -143,16 +152,16 @@
     <Content Include="scripts\jquery-3.0.0.slim.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
-    <Content Include="Views\Main\Photos.cshtml" />
     <Content Include="Views\Main\Log.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="photos\MainController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="photos\PhotosModel.cs" />
+    <Compile Include="Models\PhotoStruct.cs" />
+    <Compile Include="Models\PhotosModel.cs" />
     <Compile Include="Models\ConfigModel.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\HomeModel.cs" />
@@ -178,7 +187,9 @@
     <Content Include="scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Views\Main\Error.cshtml" />
     <Content Include="Views\Main\reqDetails.cshtml" />
-    <Content Include="photos\Photos.cshtml" />
+    <Content Include="Views\Main\Photos.cshtml" />
+    <Content Include="Views\Main\HandlerRemoval.cshtml" />
+    <Content Include="Views\Main\ViewPhoto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -196,9 +207,7 @@
       <Name>GUICommunication</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

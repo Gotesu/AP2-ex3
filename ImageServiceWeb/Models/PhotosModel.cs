@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.IO;
+using System.Web;
+using ImageServiceWeb.Struct;
 
 namespace ImageServiceWeb.Models
 {
@@ -22,8 +24,8 @@ namespace ImageServiceWeb.Models
         }
 		
 		//colection of handlers
-		private ObservableCollection<string> model_photos;
-		public ObservableCollection<string> photos
+		private ObservableCollection<PhotoStruct> model_photos;
+		public ObservableCollection<PhotoStruct> photos
         {
             get
             {
@@ -41,15 +43,15 @@ namespace ImageServiceWeb.Models
         private static object _lock = new object();
         
 		/// <summary>
-        /// ctor init as blank and than updating using event (different func)
+        /// ctor
         /// </summary>
-        public PhotosModel(string path)
+        public PhotosModel()
         {
 			try
 			{
 				m_dirWatcher = new FileSystemWatcher();
 				// set dirWatcher path
-				m_dirWatcher.Path = path;
+				m_dirWatcher.Path = HttpContext.Current.Server.MapPath(@"~\OutputDir\Thumbnails");
 				// set the photos list (using the path)
 				UpdatePhotosList();
 				BindingOperations.EnableCollectionSynchronization(model_photos, _lock);
@@ -88,7 +90,7 @@ namespace ImageServiceWeb.Models
 		/// </summary>
 		private void UpdatePhotosList()
 		{
-			ObservableCollection<string> pho = new ObservableCollection<string>();
+			ObservableCollection<PhotoStruct> pho = new ObservableCollection<PhotoStruct>();
 			// get all files into an array
 			string[] files = Directory.GetFiles(m_dirWatcher.Path, "*",
 				SearchOption.AllDirectories);
@@ -99,7 +101,10 @@ namespace ImageServiceWeb.Models
 					file.EndsWith(".gif") || file.EndsWith(".bmp") ||
 					file.EndsWith(".JPG") || file.EndsWith(".PNG") ||
 					file.EndsWith(".GIF") || file.EndsWith(".BMP"))
-					pho.Add(file);
+				{
+					String RelativePath = file.Replace(HttpContext.Current.Request.ServerVariables["APPL_PHYSICAL_PATH"], String.Empty);
+					pho.Add(new PhotoStruct(@"..\" + RelativePath));
+				}
 			}
 			photos = pho;
 		}
@@ -107,11 +112,13 @@ namespace ImageServiceWeb.Models
 		/// <summary>
 		/// The function delete a file.
 		/// </summary>
-		/// <param name="path">The string for file's path</param>
-		public void DeleteFile(string path)
+		/// <param name="photoNum">The number of the photo in model_photos</param>
+		public void DeleteFile(int photoNum)
         {
+			PhotoStruct photo = model_photos[photoNum];
 			// delete the file
-			File.Delete(path);
+			File.Delete(HttpContext.Current.Server.MapPath(photo.Thumbnail));
+			File.Delete(HttpContext.Current.Server.MapPath(photo.Photo));
 		}
-    }
+	}
 }

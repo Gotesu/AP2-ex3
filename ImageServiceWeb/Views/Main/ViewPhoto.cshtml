@@ -1,0 +1,22 @@
+﻿@using ImageServiceWeb.Struct;
+@{
+    ViewBag.Title = "ViewPhoto";
+}
+
+<h2>ViewPhoto</h2>
+<img src=@ViewBag.viewPhoto.Photo>
+<div class="caption">
+    <h4>Photo details</h4>
+    <p>Name: @ViewBag.viewPhoto.Name</p>
+    <p>Date: @ViewBag.viewPhoto.Date</p>
+    <p>
+        <button type="button" class="btn btn-danger btn-xs" id=@ViewBag.photoNum onclick="Delete(id)">Delete</button>
+    </p>
+</div>
+
+<script>
+    function Delete(photoNum) {
+        var url = '@Url.Action("Delete", "Main")?photoNum=' + photoNum;
+        $.get(url);
+    }
+</script>
