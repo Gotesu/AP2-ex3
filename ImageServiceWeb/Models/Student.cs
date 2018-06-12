@@ -7,6 +7,9 @@ using System.Xml.Serialization;
 
 namespace ImageServiceWeb.Models
 {
+    /// <summary>
+    /// this is our student object so we can show our student data in a nice bootstrap looking table on home page
+    /// </summary>
     [Serializable]
     [XmlRoot("Students"), XmlType("Students")]
     public class Student

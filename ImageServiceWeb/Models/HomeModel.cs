@@ -7,6 +7,9 @@ using System.Web;
 
 namespace ImageServiceWeb.Models
 {
+    /// <summary>
+    /// home model get the connection instance and checks that server is active and gets our students info
+    /// </summary>
     public class HomeModel
     {
         private IGUIClient client;

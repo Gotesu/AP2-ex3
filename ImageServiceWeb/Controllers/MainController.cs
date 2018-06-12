@@ -11,19 +11,25 @@ namespace ImageServiceWeb.Controllers
 {
     public class MainController : Controller
     {
+        //home page model
 		static HomeModel model = new HomeModel();
+        //config page model
         static ConfigModel configModel = new ConfigModel();
+        //photos page model
 		static PhotosModel photosModel = new PhotosModel();
+		//log page model
 		static LogModel logModel = new LogModel();
+        //our log entries
         static List<Entry> entries = new List<Entry>();
-        // GET: First
+        // GET: Config
         public ActionResult Config()
         {
-            
+            //this is the configuration page control method
             ImageServiceConfig config = configModel.getConfig();
 
             if (config != null)
             {
+                //case we got a configuration
                 ViewBag.config = config;
                 ViewBag.handlers = config.handlers;
                 while (!configModel.removed)
@@ -32,19 +38,20 @@ namespace ImageServiceWeb.Controllers
             }
             else
             {
+                //if we cannot get our configuration we show blank results
                 config = new ImageServiceConfig(null, 0, "not available", "not available", "not available");
                 ViewBag.config = config;
             }
 
             return View();
         }
-
+        //this one is our Home page which reads the students info from appdata xml file
         [HttpGet]
         public ActionResult Home()
         {
             return View(model.GetStudents());
         }
-
+        //photos page control which reads from photo model
 		[HttpGet]
 		public ActionResult Photos()
 		{
@@ -70,7 +77,10 @@ namespace ImageServiceWeb.Controllers
 		{
 			photosModel.DeleteFile(Int32.Parse(photoNum) );
 		}
-
+        /// <summary>
+        /// get status is the method which gets us the status and the number of images using json
+        /// </summary>
+        /// <returns></returns>
 		[HttpGet]
         public JObject GetStatus()
         {
@@ -83,9 +93,14 @@ namespace ImageServiceWeb.Controllers
             return data;
         }
 
-        // GET: First/Details
+        /// <summary>
+        /// log action results gives us the log page but first transforms log list to show entries in the
+        /// wanted format
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Log()
         {
+            //uses entries from log model
             foreach (EventLogEntry ent in logModel.entries)
             {
                 Entry entry = new Entry();
@@ -111,13 +126,20 @@ namespace ImageServiceWeb.Controllers
             }
             return View(entries);
         }
-
+        /// <summary>
+        /// page for handler removal
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public ActionResult HandlerRemoval(string path)
         {
             ViewBag.handler = path;
             return View();
         }
-
+        /// <summary>
+        /// method to remove handler
+        /// </summary>
+        /// <param name="path"></param>
         public void Remove(string path)
         {
             configModel.RemoveHandler(path);
