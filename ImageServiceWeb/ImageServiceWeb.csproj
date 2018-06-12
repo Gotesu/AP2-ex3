@@ -190,6 +190,7 @@
     <Content Include="Views\Main\Photos.cshtml" />
     <Content Include="Views\Main\HandlerRemoval.cshtml" />
     <Content Include="Views\Main\ViewPhoto.cshtml" />
+    <Content Include="Views\Main\DeletePhoto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -13,8 +13,8 @@
     }
 }
 
-<h2>View Photo</h2>
-<img src=@ViewBag.photos[@photoNum].Photo>
+<h2>Do you want to delete this photo?</h2>
+<img src=@ViewBag.photos[@photoNum].Thumbnail>
 <div class="caption">
     <h4>Photo details</h4>
     <p>Name: @ViewBag.photos[@photoNum].Name</p>
@@ -26,6 +26,8 @@
 
 <script>
      function Delete(photoNum) {
-             window.location.href = 'DeletePhoto?num=' + photoNum;
+         var url = '@Url.Action("Delete", "Main")?photoNum=' + photoNum;
+         $.get(url);
+         window.location.href = 'Photos';
      }
 </script>

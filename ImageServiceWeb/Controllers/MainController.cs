@@ -1,16 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using ImageService.Infrastructure;
 using ImageServiceWeb.Models;
-using System.IO;
-using ImageServiceWeb.Struct;
 
 namespace ImageServiceWeb.Controllers
 {
@@ -53,14 +48,21 @@ namespace ImageServiceWeb.Controllers
 		[HttpGet]
 		public ActionResult Photos()
 		{
-			ViewBag.photos = photosModel.photos;
+			ViewBag.photos = photosModel.GetPhotoList();
 			return View();
 		}
 
 		[HttpGet]
 		public ActionResult ViewPhoto()
 		{
-			ViewBag.photos = photosModel.photos;
+			ViewBag.photos = photosModel.Photos;
+			return View();
+		}
+
+		[HttpGet]
+		public ActionResult DeletePhoto()
+		{
+			ViewBag.photos = photosModel.Photos;
 			return View();
 		}
 

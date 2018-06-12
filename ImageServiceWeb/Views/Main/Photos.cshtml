@@ -7,7 +7,7 @@
       type="text/css"
       href="~/Content/photos.css">
 
-<h2>Photos</h2>
+<h2>Photo's Gallery</h2>
 @for (int i=0; i < ViewBag.photos.Count; i++)
 {
     <div class="col-xs-18 col-sm-6 col-md-3">
@@ -32,7 +32,6 @@
      }
 
     function Delete(photoNum) {
-        var url = '@Url.Action("Delete", "Main")?photoNum=' + photoNum;
-        $.get(url);
+         window.location.href = 'DeletePhoto?num=' + photoNum;
     }
 </script>
