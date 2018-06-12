@@ -79,7 +79,7 @@ namespace ImageServiceWeb.Controllers
                 data["Status"] = "Active";
             else
                 data["Status"] = "Not Active";
-            data["Number"] = model.numOfImages().ToString();
+            data["Number"] = photosModel.ImagesNumber().ToString();
             return data;
         }
 

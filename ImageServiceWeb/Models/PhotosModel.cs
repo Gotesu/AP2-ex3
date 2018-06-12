@@ -32,10 +32,7 @@ namespace ImageServiceWeb.Models
 				foreach (string file in files)
 				{
 					//check file type
-					if (file.EndsWith(".jpg") || file.EndsWith(".png") ||
-						file.EndsWith(".gif") || file.EndsWith(".bmp") ||
-						file.EndsWith(".JPG") || file.EndsWith(".PNG") ||
-						file.EndsWith(".GIF") || file.EndsWith(".BMP"))
+					if (IsImage(file))
 					{
 						String RelativePath = file.Replace(HttpContext.Current.Request.ServerVariables["APPL_PHYSICAL_PATH"], String.Empty);
 						photos.Add(new PhotoStruct(@"..\" + RelativePath));
@@ -60,6 +57,39 @@ namespace ImageServiceWeb.Models
 				File.Delete(HttpContext.Current.Server.MapPath(photo.Thumbnail));
 				File.Delete(HttpContext.Current.Server.MapPath(photo.Photo));
 			}
+		}
+
+		/// <summary>
+		/// The function checks if the given file is an image.
+		/// </summary>
+		/// <param name="path">The string for file's path</param>
+		/// <returns>True if file is image type, and false otherwise</returns>
+		public bool IsImage(string path)
+		{
+			return (path.EndsWith(".jpg") || path.EndsWith(".png") ||
+					 path.EndsWith(".gif") || path.EndsWith(".bmp") ||
+					 path.EndsWith(".JPG") || path.EndsWith(".PNG") ||
+					 path.EndsWith(".GIF") || path.EndsWith(".BMP"));
+		}
+
+		/// <summary>
+		/// The function counts the number of image files in a given directory.
+		/// </summary>
+		/// <returns>The number of image files in the directory</returns>
+		public int ImagesNumber()
+		{
+			// get all files into an array
+			string[] files = Directory.GetFiles(path, "*",
+				SearchOption.AllDirectories);
+			// count image files
+			int count = 0;
+			foreach (string file in files)
+			{
+				//check file type
+				if (IsImage(file))
+					count++; // increase count value
+			}
+			return count;
 		}
 	}
 }

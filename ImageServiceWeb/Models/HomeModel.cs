@@ -30,10 +30,6 @@ namespace ImageServiceWeb.Models
             return students;
         }
 
-        public int numOfImages()
-        {
-            return 31;
-        }
         public bool connectionStatus()
         {
             return client.isConnected();
