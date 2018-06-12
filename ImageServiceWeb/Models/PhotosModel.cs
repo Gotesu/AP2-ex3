@@ -8,19 +8,25 @@ namespace ImageServiceWeb.Models
 {
     public class PhotosModel
     {
-		private string path = HttpContext.Current.Server.MapPath(@"~\OutputDir\Thumbnails");
-		private Object thisLock = new Object();
+		private string path = HttpContext.Current.Server.MapPath(@"~\OutputDir\Thumbnails"); // dir path
+		private Object thisLock = new Object(); // lock object
+		// List of PhotoStruct of all the photos in dir
 		private List<PhotoStruct> photos = null;
 		public List<PhotoStruct> Photos
 		{
 			get
 			{
+				// check for null case
 				if (photos == null)
 					GetPhotoList();
 				return photos;
 			}
 		}
 
+		/// <summary>
+		/// The function gets photos list into photos, and returns it.
+		/// </summary>
+		/// <return> photos list</return>
 		public List<PhotoStruct> GetPhotoList()
 		{
 			lock (thisLock)
@@ -45,7 +51,7 @@ namespace ImageServiceWeb.Models
 		/// <summary>
 		/// The function delete a file.
 		/// </summary>
-		/// <param name="photoNum">The number of the photo in model_photos</param>
+		/// <param name="photoNum">the photo index inside the list</param>
 		public void DeleteFile(int photoNum)
         {
 			lock (thisLock)
