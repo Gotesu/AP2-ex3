@@ -28,8 +28,7 @@
 
  <script>
      function View(photoNum) {
-         window.location.href =  '@Url.Action("PhotoView", "Main", new { photoNum = "NUM" })'.replace("NUM", photoNum);
-         window.location.href = './ViewPhoto';
+         window.location.href = 'ViewPhoto?num=' + photoNum;
      }
 
     function Delete(photoNum) {

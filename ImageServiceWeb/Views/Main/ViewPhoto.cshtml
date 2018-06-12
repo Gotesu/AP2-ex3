@@ -1,21 +1,23 @@
 ﻿@using ImageServiceWeb.Struct;
+@model IEnumerable<ImageServiceWeb.Models.PhotosModel>
 @{
-    ViewBag.Title = "ViewPhoto";
+    ViewBag.Title = "viewPhoto";
+    int photoNum = Int32.Parse(HttpContext.Current.Request.QueryString["num"]);
 }
 
 <h2>ViewPhoto</h2>
-<img src=@ViewBag.viewPhoto.Photo>
+<img src=@ViewBag.photos[@photoNum].Photo>
 <div class="caption">
     <h4>Photo details</h4>
-    <p>Name: @ViewBag.viewPhoto.Name</p>
-    <p>Date: @ViewBag.viewPhoto.Date</p>
+    <p>Name: @ViewBag.photos[@photoNum].Name</p>
+    <p>Date: @ViewBag.photos[@photoNum].Date</p>
     <p>
-        <button type="button" class="btn btn-danger btn-xs" id=@ViewBag.photoNum onclick="Delete(id)">Delete</button>
+        <button type="button" class="btn btn-danger btn-xs" id=@photoNum.ToString() onclick="Delete(id)">Delete</button>
     </p>
 </div>
 
 <script>
-    function Delete(photoNum) {
+ function Delete(photoNum) {
         var url = '@Url.Action("Delete", "Main")?photoNum=' + photoNum;
         $.get(url);
     }
