@@ -13,6 +13,9 @@ using Newtonsoft.Json.Linq;
 
 namespace ImageServiceWeb.Models
 {
+    /// <summary>
+    /// log models gets our log entries for our log page
+    /// </summary>
     public class LogModel
     {
 		private IGUIClient client;

@@ -6,6 +6,9 @@ using System.Web;
 
 namespace ImageServiceWeb.Models
 {
+    /// <summary>
+    /// entry is an object to show on nice bootstrap table for our log page
+    /// </summary>
     public class Entry
     {
         [Required]

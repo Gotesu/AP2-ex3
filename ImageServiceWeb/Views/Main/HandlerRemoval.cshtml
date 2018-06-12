@@ -20,10 +20,14 @@
     }
 
     function accept(path) {
+        //we want to call the action with the handler passed as param
         var url = '@Url.Action("Remove","Main")?path=' + path;
+        //disabling buttons
         document.getElementById("btnCancel").disabled = true;
         document.getElementById(path).disabled = true;
+        //calling the method to remove
         $.get(url);
+        //loading our config page again
         var url2 = '@Url.Action("Config","Main")';
         window.location.href = url2;
     }
