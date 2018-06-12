@@ -25,6 +25,8 @@
 </div>
 
 <script>
+     /* the function gets the photo index in the list, sends the index to Delete function,
+      * and changes the location to Photos */
      function Delete(photoNum) {
          var url = '@Url.Action("Delete", "Main")?photoNum=' + photoNum;
          $.get(url);
